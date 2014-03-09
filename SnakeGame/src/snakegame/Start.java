@@ -1,26 +1,54 @@
+package snakegame;
+
 import java.applet.Applet;
+import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+
 public class Start extends Applet implements Runnable, KeyListener {
+	
+	final int REFRESH_RATE = 17;
+	
+	private Snake snake;
 
-	@Override
-	public void start() {
-		// TODO Auto-generated method stub
-		super.start();
-	}
-
+	
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
-		super.init();
+		setSize(800, 480);
+		setBackground(Color.BLACK);
+		setFocusable(true);
+		Frame frame = (Frame) this.getParent().getParent();
+		frame.setTitle("Snake Game");
+		addKeyListener(this);
+		
+		
+		
+	}
+	
+	@Override
+	public void start() {
+		
+		snake = new Snake();
+
+		Thread thread = new Thread(this);
+		thread.start();
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-
+		while (true) {
+			
+			repaint();
+			try {
+				Thread.sleep(REFRESH_RATE);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@Override
@@ -37,14 +65,12 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void update(Graphics g) {
-		// TODO Auto-generated method stub
-		super.update(g);
+
 	}
 	
 	@Override
 	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
-		super.paint(g);
+
 	}
 
 	@Override
