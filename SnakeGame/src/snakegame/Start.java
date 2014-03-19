@@ -5,33 +5,33 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
 public class Start extends Applet implements Runnable, KeyListener {
-	
-	final int REFRESH_RATE = 17;
-	
+
+	final int REFRESH_RATE = 20;
+
 	private Snake snake;
+	private Fruit fruit;
 	private Image image;
-	private Graphics second; 
-	
+	private Graphics second;
+
 	@Override
 	public void init() {
-		setSize(800, 480);
-		setBackground(Color.WHITE);
-		setFocusable(true);
+		this.setSize(800, 480);
+		this.setBackground(Color.WHITE);
+		this.setFocusable(true);
 		Frame frame = (Frame) this.getParent().getParent();
 		frame.setTitle("Snake Game");
-		addKeyListener(this);
-		
+		this.addKeyListener(this);
+
 	}
-	
+
 	@Override
 	public void start() {
-		
+
+		fruit = new Fruit();
 		snake = new Snake();
 
 		Thread thread = new Thread(this);
@@ -41,9 +41,10 @@ public class Start extends Applet implements Runnable, KeyListener {
 	@Override
 	public void run() {
 		while (true) {
-			
+
+			fruit.update();
 			snake.update();
-			repaint();
+			this.repaint();
 			try {
 				Thread.sleep(REFRESH_RATE);
 			} catch (InterruptedException e) {
@@ -51,7 +52,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 			}
 		}
 	}
-	
+
 	@Override
 	public void stop() {
 		// TODO Auto-generated method stub
@@ -70,7 +71,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 			image = createImage(this.getWidth(), this.getHeight());
 			second = image.getGraphics();
 		}
-		
+
 		second.setColor(getBackground());
 		second.fillRect(0, 0, getWidth(), getHeight());
 		second.setColor(getForeground());
@@ -78,11 +79,25 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 		g.drawImage(image, 0, 0, this);
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
+
+		for (int i = 0; i < 480; i += 10)
+			g.drawLine(0, i, 800, i);
+		for (int i = 0; i < 800; i += 10)
+			g.drawLine(i, 0, i, 480);
+
+		// The snake is being drawn
 		g.setColor(Color.BLUE);
-		g.fillRect((int) Snake.r.getX(), (int) Snake.r.getY(), (int) Snake.r.getWidth(), (int) Snake.r.getHeight());
+		g.fillRect((int) Snake.r.getCenterX(), (int) Snake.r.getCenterY(),
+				(int) Snake.r.getWidth(), (int) Snake.r.getHeight());
+
+		// The fruit is to get painted
+		g.setColor(Color.RED);
+		g.fillOval((int) Fruit.circle.getCenterX(),
+				(int) Fruit.circle.getCenterY(), (int) Fruit.circle.getWidth(),
+				(int) Fruit.circle.getHeight());
 	}
 
 	@Override
@@ -95,22 +110,18 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			snake.setMovingInY(true);
 			snake.move(Direction.UP);
 			break;
-		
+
 		case KeyEvent.VK_DOWN:
-			snake.setMovingInY(true);
 			snake.move(Direction.DOWN);
 			break;
-			
+
 		case KeyEvent.VK_RIGHT:
-			snake.setMovingInX(true);
 			snake.move(Direction.RIGHT);
 			break;
-			
+
 		case KeyEvent.VK_LEFT:
-			snake.setMovingInX(true);
 			snake.move(Direction.LEFT);
 			break;
 		}
@@ -120,23 +131,19 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			snake.setMovingInY(false);
-			snake.stop();
+			snake.stopAllExcept(Direction.UP);
 			break;
-		
+
 		case KeyEvent.VK_DOWN:
-			snake.setMovingInY(false);
-			snake.stop();
+			snake.stopAllExcept(Direction.DOWN);
 			break;
-			
+
 		case KeyEvent.VK_RIGHT:
-			snake.setMovingInX(false);
-			snake.stop();
+			snake.stopAllExcept(Direction.RIGHT);
 			break;
-			
+
 		case KeyEvent.VK_LEFT:
-			snake.setMovingInX(false);
-			snake.stop();
+			snake.stopAllExcept(Direction.LEFT);
 			break;
 		}
 	}
