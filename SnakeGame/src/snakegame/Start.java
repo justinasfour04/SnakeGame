@@ -2,6 +2,7 @@ package snakegame;
 
 import java.applet.Applet;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -19,7 +20,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void init() {
-		this.setSize(800, 480);
+		this.setSize(1000, 480);
 		this.setBackground(Color.WHITE);
 		this.setFocusable(true);
 		Frame frame = (Frame) this.getParent().getParent();
@@ -55,14 +56,12 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
-		super.stop();
+		
 	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-		super.destroy();
+		
 	}
 
 	@Override
@@ -83,10 +82,12 @@ public class Start extends Applet implements Runnable, KeyListener {
 	@Override
 	public void paint(Graphics g) {
 
-		for (int i = 0; i < 480; i += 10)
-			g.drawLine(0, i, 800, i);
-		for (int i = 0; i < 800; i += 10)
-			g.drawLine(i, 0, i, 480);
+		// Game border drawing happening over here
+		g.drawLine(10, 10, 10, 478); // Left border
+		g.drawLine(10, 10, 800, 10); // Top border
+		g.drawLine(10, 478, 800, 478); // Bottom border
+		g.drawLine(800, 10, 800, 478); // Right border 
+		
 
 		// The snake is being drawn
 		g.setColor(Color.BLUE);
@@ -95,9 +96,13 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 		// The fruit is to get painted
 		g.setColor(Color.RED);
-		g.fillOval((int) Fruit.circle.getCenterX(),
-				(int) Fruit.circle.getCenterY(), (int) Fruit.circle.getWidth(),
-				(int) Fruit.circle.getHeight());
+		g.fillOval((int) Fruit.fruit.getCenterX(),
+				(int) Fruit.fruit.getCenterY(), (int) Fruit.fruit.getWidth(),
+				(int) Fruit.fruit.getHeight());
+
+		g.setColor(Color.BLACK);
+		g.drawString("The Snake Game", 870, 90);
+		g.drawString("Score: " + Fruit.getScore(), 900, 120);
 	}
 
 	@Override
@@ -129,23 +134,23 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP:
-			snake.stopAllExcept(Direction.UP);
-			break;
-
-		case KeyEvent.VK_DOWN:
-			snake.stopAllExcept(Direction.DOWN);
-			break;
-
-		case KeyEvent.VK_RIGHT:
-			snake.stopAllExcept(Direction.RIGHT);
-			break;
-
-		case KeyEvent.VK_LEFT:
-			snake.stopAllExcept(Direction.LEFT);
-			break;
-		}
+//		switch (e.getKeyCode()) {
+//		case KeyEvent.VK_UP:
+//			snake.stopAllExcept(Direction.UP);
+//			break;
+//
+//		case KeyEvent.VK_DOWN:
+//			snake.stopAllExcept(Direction.DOWN);
+//			break;
+//
+//		case KeyEvent.VK_RIGHT:
+//			snake.stopAllExcept(Direction.RIGHT);
+//			break;
+//
+//		case KeyEvent.VK_LEFT:
+//			snake.stopAllExcept(Direction.LEFT);
+//			break;
+//		}
 	}
 
 }

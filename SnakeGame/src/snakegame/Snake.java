@@ -4,19 +4,19 @@ import java.awt.Rectangle;
 
 public class Snake {
 
-	final int MIN_BOUNDARY_X = 10;
-	final int MIN_BOUNDARY_Y = 10;
+	final int MIN_BOUNDARY_X = 0;
+	final int MIN_BOUNDARY_Y = 0;
 	final int MAX_BOUNDARY_X = 790;
 	final int MAX_BOUNDARY_Y = 470;
-	final int MOVESPEED = 2;
+	final int MOVESPEED = 3;
 	private int snakeX = 395;
 	private int snakeY = 235;
 
+	private int speedDown = 0;
+	private int speedUp = 0;
+	
 	private int speedX = 0;
 	private int speedY = 0;
-
-	private boolean movingInX = false;
-	private boolean movingInY = false;
 
 	private int size = 10;
 
@@ -94,25 +94,21 @@ public class Snake {
 		case UP:
 			setSpeedY(-MOVESPEED);
 			setSpeedX(0);
-			//setMovingInY(true);
 			break;
 			
 		case DOWN:
 			setSpeedY(MOVESPEED);
 			setSpeedX(0);
-			//setMovingInY(true);
 			break;
 			
 		case RIGHT:
 			setSpeedX(MOVESPEED);
 			setSpeedY(0);
-			//setMovingInX(true);
 			break;
 			
 		case LEFT:
 			setSpeedX(-MOVESPEED);
 			setSpeedY(0);
-			//setMovingInX(true);
 			break;
 		}
 	}
@@ -157,21 +153,5 @@ public class Snake {
 
 	public void setSize(int size) {
 		this.size = size;
-	}
-
-	public boolean isMovingInX() {
-		return movingInX;
-	}
-
-	public boolean isMovingInY() {
-		return movingInY;
-	}
-
-	public void setMovingInX(boolean movingInX) {
-		this.movingInX = movingInX;
-	}
-
-	public void setMovingInY(boolean movingInY) {
-		this.movingInY = movingInY;
 	}
 }
