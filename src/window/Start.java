@@ -1,9 +1,17 @@
-package src.window;
+package window;
+
+import game.Fruit;
+import game.Snake;
 
 import java.applet.Applet;
 import java.awt.Color;
-import game.*;
-import constants.*;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import constants.Direction;
 
 public class Start extends Applet implements Runnable, KeyListener {
 
