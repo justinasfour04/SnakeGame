@@ -16,8 +16,6 @@ import constants.Direction;
 
 public class Start extends Applet implements Runnable, KeyListener {
 
-	
-
 	private Snake snake;
 	private Fruit fruit;
 	private Image image;
@@ -48,9 +46,9 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void run() {
 		while (true) {
 
+			this.repaint();
 			fruit.update();
 			snake.update();
-			this.repaint();
 			try {
 				Thread.sleep(Constants.REFRESH_RATE);
 			} catch (InterruptedException e) {
@@ -107,7 +105,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 		g.setColor(Color.BLACK);
 		g.drawString("The Snake Game", 870, 90);
-		g.drawString("Score: " + Fruit.getScore(), 900, 120);
+		g.drawString("Score: " + fruit.getScore(), 900, 120);
 	}
 
 	@Override
@@ -120,19 +118,19 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			snake.move(Direction.UP);
+			snake.setDirection(Direction.UP);
 			break;
 
 		case KeyEvent.VK_DOWN:
-			snake.move(Direction.DOWN);
+			snake.setDirection(Direction.DOWN);
 			break;
 
 		case KeyEvent.VK_RIGHT:
-			snake.move(Direction.RIGHT);
+			snake.setDirection(Direction.RIGHT);
 			break;
 
 		case KeyEvent.VK_LEFT:
-			snake.move(Direction.LEFT);
+			snake.setDirection(Direction.LEFT);
 			break;
 		}
 	}

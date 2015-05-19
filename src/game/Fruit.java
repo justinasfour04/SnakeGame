@@ -6,16 +6,30 @@ import constants.Constants;
 
 public class Fruit {
 
-	private Random r1 = new Random();
-	private Random r2 = new Random();
+	private Random r1;
+	private Random r2;
 
-	private int fruitXPos = r1.nextInt(799), fruitYPos = r2.nextInt(479);
+	private int fruitX, fruitY;
 
 	private boolean eaten = false;
 	
-	private static int score = 0; //TODO: Make controller class to keep track of score and fruit generation
+	private static int score = 0; //TODO: Make Controller class to keep track of score and fruit generation
 
-	public static Rectangle fruit = new Rectangle(0, 0, 0, 0);
+	public static Rectangle fruit;
+	
+	public Fruit() {
+		r1 = new Random();
+		r2 = new Random();
+		
+		score = INITIAL_SCORE;
+		
+		fruit = new Rectangle(0, 0, 0, 0);
+		
+		size = 10;
+		
+		fruitX = r1.nextInt(799); 
+		fruitY = r2.nextInt(479);
+	}
 
 	public void update() {
 
@@ -66,11 +80,11 @@ public class Fruit {
 		this.eaten = eaten;
 	}
 
-	public static int getScore() {
+	public int getScore() {
 		return score;
 	}
 
 	public void setScore(int score) {
-		Fruit.score = score;
+		this.score = score;
 	}
 }

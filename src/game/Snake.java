@@ -1,10 +1,10 @@
 package game;
 
 import java.awt.Rectangle;
-import constants.*;
+
+import constants.Direction;
 public class Snake {
 
-	
 	private int currentXPos = 395;
 	private int currentYPos = 235;
 	
@@ -14,21 +14,22 @@ public class Snake {
 	
 
 	public static Rectangle r = new Rectangle(0, 0, 0, 0);
-
 	
 	//Need to figure out a way to get the update not to stop moving my snake around
 	//Right now what is happening is because of the keyReleased it stops all movement because it can't enter if statement 
 	//Need to fix if statement
 	public void update() {
 		
-		r.setRect(currentXPos, currentYPos, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
-
-		// updates x position
-		currentXPos += currentSpeedX;
-
-		// updates y position
-		currentYPos += currentSpeedY;
-			
+		r.setRect(snakeX, snakeY, size, size);
+		
+		if (direction == Direction.UP)
+			move(Direction.UP);
+		else if (direction == Direction.DOWN)
+			move(Direction.DOWN);
+		else if (direction == Direction.RIGHT)
+			move(Direction.RIGHT);
+		else
+			move(Direction.LEFT);			
 			
 		// prevents snake from moving out of bounds
 		int posX = currentXPos + currentSpeedX;
@@ -63,20 +64,16 @@ public class Snake {
 	public void move(Direction direction) {
 		switch (direction) {
 		case UP:
-			setSpeedY(-Constants.MOVE_SPEED);
-			setSpeedX(0);
+			speedX -= MOVESPEED;
 			break;
 		case DOWN:
-			setSpeedY(Constants.MOVE_SPEED);
-			setSpeedX(0);
+			speedY += MOVESPEED;
 			break;
 		case RIGHT:
-			setSpeedX(Constants.MOVE_SPEED);
-			setSpeedY(0);
+			speedX += MOVESPEED;
 			break;
 		case LEFT:
-			setSpeedX(-Constants.MOVE_SPEED);
-			setSpeedY(0);
+			speedY -= MOVESPEED;
 			break;
 		}
 	}
@@ -112,5 +109,4 @@ public class Snake {
 	public void setSpeedY(int speedY) {
 		this.currentSpeedY = speedY;
 	}
-
 }
