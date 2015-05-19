@@ -87,33 +87,6 @@ public class Snake {
 			break;
 		}
 	}
-	
-	// This method needs to be looked at to stop the snake from moving in one axis while continuing to move in other
-	public void stopAllExcept(Direction direction) {
-		switch (direction) {
-		case UP:
-			setSpeedY(-MOVESPEED);
-			setSpeedX(0);
-			break;
-			
-		case DOWN:
-			setSpeedY(MOVESPEED);
-			setSpeedX(0);
-			break;
-			
-		case RIGHT:
-			setSpeedX(MOVESPEED);
-			setSpeedY(0);
-			break;
-			
-		case LEFT:
-			setSpeedX(-MOVESPEED);
-			setSpeedY(0);
-			break;
-		}
-	}
-
-	
 
 	public int getSnakeX() {
 		return snakeX;
