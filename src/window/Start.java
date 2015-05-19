@@ -11,11 +11,12 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import constants.Constants;
 import constants.Direction;
 
 public class Start extends Applet implements Runnable, KeyListener {
 
-	final int REFRESH_RATE = 20;
+	
 
 	private Snake snake;
 	private Fruit fruit;
@@ -24,7 +25,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void init() {
-		this.setSize(1000, 480);
+		this.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		this.setBackground(Color.WHITE);
 		this.setFocusable(true);
 		Frame frame = (Frame) this.getParent().getParent();
@@ -51,7 +52,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 			snake.update();
 			this.repaint();
 			try {
-				Thread.sleep(REFRESH_RATE);
+				Thread.sleep(Constants.REFRESH_RATE);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

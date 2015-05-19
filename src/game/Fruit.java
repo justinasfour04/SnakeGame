@@ -2,30 +2,30 @@ package game;
 
 import java.awt.Rectangle;
 import java.util.Random;
+import constants.Constants;
 
 public class Fruit {
 
 	private Random r1 = new Random();
 	private Random r2 = new Random();
 
-	private int fruitX = r1.nextInt(799), fruitY = r2.nextInt(479);
+	private int fruitXPos = r1.nextInt(799), fruitYPos = r2.nextInt(479);
 
 	private boolean eaten = false;
-
-	private int size = 10;
-	private static int score = 0;
+	
+	private static int score = 0; //TODO: Make controller class to keep track of score and fruit generation
 
 	public static Rectangle fruit = new Rectangle(0, 0, 0, 0);
 
 	public void update() {
 
-		fruit.setRect(fruitX, fruitY, size, size);
+		fruit.setRect(fruitXPos, fruitYPos, Constants.FRUIT_SIZE, Constants.FRUIT_SIZE);
 
 		if (checkCollision(Snake.r)) {
 			setEaten(true);
 			incrementScore();
-			fruitX = 12 + r1.nextInt(790-12);
-			fruitY = 12 + r2.nextInt(470-12);
+			fruitXPos = 12 + r1.nextInt(790-12);
+			fruitYPos = 12 + r2.nextInt(470-12);
 			setEaten(false);
 		}
 
@@ -43,19 +43,19 @@ public class Fruit {
 	}
 
 	public int getFruitX() {
-		return fruitX;
+		return fruitXPos;
 	}
 
 	public int getFruitY() {
-		return fruitY;
+		return fruitYPos;
 	}
 
 	public void setFruitX(int fruitX) {
-		this.fruitX = fruitX;
+		this.fruitXPos = fruitX;
 	}
 
 	public void setFruitY(int fruitY) {
-		this.fruitY = fruitY;
+		this.fruitYPos = fruitY;
 	}
 
 	public boolean isEaten() {

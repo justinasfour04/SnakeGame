@@ -4,21 +4,14 @@ import java.awt.Rectangle;
 import constants.*;
 public class Snake {
 
-	final int MIN_BOUNDARY_X = 0;
-	final int MIN_BOUNDARY_Y = 0;
-	final int MAX_BOUNDARY_X = 790;
-	final int MAX_BOUNDARY_Y = 470;
-	final int MOVESPEED = 3;
-	private int snakeX = 395;
-	private int snakeY = 235;
-
-	private int speedDown = 0;
-	private int speedUp = 0;
 	
-	private int speedX = 0;
-	private int speedY = 0;
+	private int currentXPos = 395;
+	private int currentYPos = 235;
+	
+	private int currentSpeedX = 0;
+	private int currentSpeedY = 0;
 
-	private int size = 10;
+	
 
 	public static Rectangle r = new Rectangle(0, 0, 0, 0);
 
@@ -28,41 +21,41 @@ public class Snake {
 	//Need to fix if statement
 	public void update() {
 		
-		r.setRect(snakeX, snakeY, size, size);
+		r.setRect(currentXPos, currentYPos, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
 
 		// updates x position
-		snakeX += speedX;
+		currentXPos += currentSpeedX;
 
 		// updates y position
-		snakeY += speedY;
+		currentYPos += currentSpeedY;
 			
 			
 		// prevents snake from moving out of bounds
-		int posX = snakeX + speedX;
-		int posY = snakeY + speedY;
+		int posX = currentXPos + currentSpeedX;
+		int posY = currentYPos + currentSpeedY;
 
 		//need to fix boundary conditions for better collision detection later 
 		//the corners of the screen don't stop snake from going out of screen
-		if (posX <= MIN_BOUNDARY_X) {
-			snakeX = MIN_BOUNDARY_X + size;
-		} else if (posY <= MIN_BOUNDARY_Y) {
-			snakeY = MIN_BOUNDARY_Y + size;
-		} else if (posX >= MAX_BOUNDARY_X) {
-			snakeX = MAX_BOUNDARY_X - size;
-		} else if (posY >= MAX_BOUNDARY_Y) {
-			snakeY = MAX_BOUNDARY_Y - size;
-		} else if (posX <= MIN_BOUNDARY_X && posY <= MIN_BOUNDARY_Y) {
-			snakeX = MIN_BOUNDARY_X + 1;
-			snakeY = MIN_BOUNDARY_Y + 1;
-		} else if (posX <= MIN_BOUNDARY_X && posY >= MAX_BOUNDARY_Y) {
-			snakeX = MIN_BOUNDARY_X + 1;
-			snakeY = MAX_BOUNDARY_Y - 1;
-		} else if (posX >= MAX_BOUNDARY_X && posY >= MAX_BOUNDARY_Y) {
-			snakeX = MAX_BOUNDARY_X - 1;
-			snakeY = MAX_BOUNDARY_Y - 1;
-		} else if (posX >= MAX_BOUNDARY_X && posY <= MIN_BOUNDARY_Y) {
-			snakeX = MAX_BOUNDARY_X - 1;
-			snakeY = MIN_BOUNDARY_Y + 1;
+		if (posX <= Constants.MIN_BOUNDARY_X) {
+			currentXPos = Constants.MIN_BOUNDARY_X + Constants.SNAKE_SIZE;
+		} else if (posY <= Constants.MIN_BOUNDARY_Y) {
+			currentYPos =Constants. MIN_BOUNDARY_Y + Constants.SNAKE_SIZE;
+		} else if (posX >= Constants.MAX_BOUNDARY_X) {
+			currentXPos = Constants.MAX_BOUNDARY_X - Constants.SNAKE_SIZE;
+		} else if (posY >= Constants.MAX_BOUNDARY_Y) {
+			currentYPos = Constants.MAX_BOUNDARY_Y - Constants.SNAKE_SIZE;
+		} else if (posX <= Constants.MIN_BOUNDARY_X && posY <= Constants.MIN_BOUNDARY_Y) {
+			currentXPos = Constants.MIN_BOUNDARY_X + 1;
+			currentYPos = Constants.MIN_BOUNDARY_Y + 1;
+		} else if (posX <= Constants.MIN_BOUNDARY_X && posY >= Constants.MAX_BOUNDARY_Y) {
+			currentXPos = Constants.MIN_BOUNDARY_X + 1;
+			currentYPos = Constants.MAX_BOUNDARY_Y - 1;
+		} else if (posX >= Constants.MAX_BOUNDARY_X && posY >= Constants.MAX_BOUNDARY_Y) {
+			currentXPos = Constants.MAX_BOUNDARY_X - 1;
+			currentYPos = Constants.MAX_BOUNDARY_Y - 1;
+		} else if (posX >= Constants.MAX_BOUNDARY_X && posY <= Constants.MIN_BOUNDARY_Y) {
+			currentXPos = Constants.MAX_BOUNDARY_X - 1;
+			currentYPos = Constants.MIN_BOUNDARY_Y + 1;
 		}
 
 	}
@@ -70,61 +63,54 @@ public class Snake {
 	public void move(Direction direction) {
 		switch (direction) {
 		case UP:
-			setSpeedY(-MOVESPEED);
+			setSpeedY(-Constants.MOVE_SPEED);
 			setSpeedX(0);
 			break;
 		case DOWN:
-			setSpeedY(MOVESPEED);
+			setSpeedY(Constants.MOVE_SPEED);
 			setSpeedX(0);
 			break;
 		case RIGHT:
-			setSpeedX(MOVESPEED);
+			setSpeedX(Constants.MOVE_SPEED);
 			setSpeedY(0);
 			break;
 		case LEFT:
-			setSpeedX(-MOVESPEED);
+			setSpeedX(-Constants.MOVE_SPEED);
 			setSpeedY(0);
 			break;
 		}
 	}
 
 	public int getSnakeX() {
-		return snakeX;
+		return currentXPos;
 	}
 
 	public int getSnakeY() {
-		return snakeY;
+		return currentYPos;
 	}
 
 	public int getSpeedX() {
-		return speedX;
+		return currentSpeedX;
 	}
 
 	public int getSpeedY() {
-		return speedY;
-	}
-
-	public int getSize() {
-		return size;
+		return currentSpeedY;
 	}
 
 	public void setSnakeX(int snakeX) {
-		this.snakeX = snakeX;
+		this.currentXPos = snakeX;
 	}
 
 	public void setSnakeY(int snakeY) {
-		this.snakeY = snakeY;
+		this.currentYPos = snakeY;
 	}
 
 	public void setSpeedX(int speedX) {
-		this.speedX = speedX;
+		this.currentSpeedX = speedX;
 	}
 
 	public void setSpeedY(int speedY) {
-		this.speedY = speedY;
+		this.currentSpeedY = speedY;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
-	}
 }
