@@ -1,8 +1,9 @@
-package game;
+package snake;
 
 import java.awt.Rectangle;
 
-import constants.Direction;
+import utility.Constants;
+import utility.Constants.Direction;
 public class Snake {
 
 	private int currentXPos = 395;
@@ -11,7 +12,7 @@ public class Snake {
 	private int currentSpeedX = 0;
 	private int currentSpeedY = 0;
 
-	
+	private Direction currentDirection;
 
 	public static Rectangle r = new Rectangle(0, 0, 0, 0);
 	
@@ -20,13 +21,13 @@ public class Snake {
 	//Need to fix if statement
 	public void update() {
 		
-		r.setRect(snakeX, snakeY, size, size);
+		r.setRect(currentXPos, currentYPos, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
 		
-		if (direction == Direction.UP)
+		if (currentDirection == Direction.UP)
 			move(Direction.UP);
-		else if (direction == Direction.DOWN)
+		else if (currentDirection == Direction.DOWN)
 			move(Direction.DOWN);
-		else if (direction == Direction.RIGHT)
+		else if (currentDirection == Direction.RIGHT)
 			move(Direction.RIGHT);
 		else
 			move(Direction.LEFT);			
@@ -64,16 +65,16 @@ public class Snake {
 	public void move(Direction direction) {
 		switch (direction) {
 		case UP:
-			speedX -= MOVESPEED;
+			currentSpeedX -= Constants.MOVE_SPEED;
 			break;
 		case DOWN:
-			speedY += MOVESPEED;
+			currentSpeedY += Constants.MOVE_SPEED;
 			break;
 		case RIGHT:
-			speedX += MOVESPEED;
+			currentSpeedX += Constants.MOVE_SPEED;
 			break;
 		case LEFT:
-			speedY -= MOVESPEED;
+			currentSpeedY -= Constants.MOVE_SPEED;
 			break;
 		}
 	}
@@ -108,5 +109,13 @@ public class Snake {
 
 	public void setSpeedY(int speedY) {
 		this.currentSpeedY = speedY;
+	}
+
+	public void setDirection(Direction d) {
+		this.currentDirection = d;
+	}
+	
+	public Direction getDirection(){
+		return this.currentDirection;
 	}
 }

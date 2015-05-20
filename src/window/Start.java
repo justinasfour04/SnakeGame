@@ -1,7 +1,6 @@
 package window;
 
-import game.Fruit;
-import game.Snake;
+import fruit.*;
 
 import java.applet.Applet;
 import java.awt.Color;
@@ -11,11 +10,13 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import constants.Constants;
-import constants.Direction;
+import snake.Snake;
+import utility.Constants;
+import utility.Constants.Direction;
 
 public class Start extends Applet implements Runnable, KeyListener {
 
+	private static final long serialVersionUID = 1L;
 	private Snake snake;
 	private Fruit fruit;
 	private Image image;
@@ -35,7 +36,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 	@Override
 	public void start() {
 
-		fruit = new Fruit();
+		fruit = new RegularFruit();
 		snake = new Snake();
 
 		Thread thread = new Thread(this);
