@@ -2,6 +2,7 @@ package snake;
 
 import java.awt.Rectangle;
 
+import fruit.Fruit;
 import utility.Constants;
 import utility.Constants.Direction;
 public class Snake {
@@ -117,5 +118,10 @@ public class Snake {
 	
 	public Direction getDirection(){
 		return this.currentDirection;
+	}
+
+	public boolean intersects(Fruit fruit) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

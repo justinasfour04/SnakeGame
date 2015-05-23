@@ -10,15 +10,16 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import controllers.GameController;
 import snake.Snake;
 import utility.Constants;
-import utility.Constants.Direction;
 
 public class Start extends Applet implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private Snake snake;
 	private Fruit fruit;
+	private GameController controller;
 	private Image image;
 	private Graphics second;
 
@@ -100,13 +101,13 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 		// The fruit is to get painted
 		g.setColor(Color.RED);
-		g.fillOval((int) Fruit.fruit.getCenterX(),
-				(int) Fruit.fruit.getCenterY(), (int) Fruit.fruit.getWidth(),
-				(int) Fruit.fruit.getHeight());
+		g.fillOval((int) fruit.getCenterX(),
+				(int) fruit.getCenterY(), (int) fruit.getWidth(),
+				(int) fruit.getHeight());
 
 		g.setColor(Color.BLACK);
 		g.drawString("The Snake Game", 870, 90);
-		g.drawString("Score: " + fruit.getScore(), 900, 120);
+		g.drawString("Score: " + controller.getScore(), 900, 120);
 	}
 
 	@Override
@@ -119,42 +120,25 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			snake.setDirection(Direction.UP);
+			snake.setDirection(Constants.Direction.UP);
 			break;
 
 		case KeyEvent.VK_DOWN:
-			snake.setDirection(Direction.DOWN);
+			snake.setDirection(Constants.Direction.DOWN);
 			break;
 
 		case KeyEvent.VK_RIGHT:
-			snake.setDirection(Direction.RIGHT);
+			snake.setDirection(Constants.Direction.RIGHT);
 			break;
 
 		case KeyEvent.VK_LEFT:
-			snake.setDirection(Direction.LEFT);
+			snake.setDirection(Constants.Direction.LEFT);
 			break;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-//		switch (e.getKeyCode()) {
-//		case KeyEvent.VK_UP:
-//			snake.stopAllExcept(Direction.UP);
-//			break;
-//
-//		case KeyEvent.VK_DOWN:
-//			snake.stopAllExcept(Direction.DOWN);
-//			break;
-//
-//		case KeyEvent.VK_RIGHT:
-//			snake.stopAllExcept(Direction.RIGHT);
-//			break;
-//
-//		case KeyEvent.VK_LEFT:
-//			snake.stopAllExcept(Direction.LEFT);
-//			break;
-//		}
 	}
 
 }

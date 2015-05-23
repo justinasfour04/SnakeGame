@@ -16,7 +16,6 @@ public abstract class Fruit {
 	protected boolean eaten;
 	protected int value;
 	
-	//private static int score = 0; //TODO: Move to controller
 	
 //	protected static Rectangle fruit;//TODO: Move to FruitView
 	
@@ -72,26 +71,4 @@ public abstract class Fruit {
 //
 //	}
 	
-	//TODO: Move to controller
-//	public boolean checkCollision(Rectangle r) {
-//		if (r.intersects(fruit))
-//			return true;
-//		return false;
-//	}
-	//TODO: Move to controller
-//	private void incrementScore() {
-//		if (isEaten())
-//			setScore(getScore() + 1);
-//	}
-
-	
-	//TODO: Move to controller
-//	public int getScore() {
-//		return score;
-//	}
-	
-	//TODO: Move to controller
-//	public void setScore(int score) {
-//		this.score = score;
-//	}
 }
