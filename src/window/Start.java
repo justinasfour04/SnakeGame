@@ -38,7 +38,8 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void start() {
 
 		fruit = new RegularFruit();
-		snake = new Snake();
+		controller = GameController.getInstance();
+		snake = Snake.getInstance();
 
 		Thread thread = new Thread(this);
 		thread.start();
@@ -49,7 +50,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 		while (true) {
 
 			this.repaint();
-			fruit.update();
+//			fruit.update();
 			snake.update();
 			try {
 				Thread.sleep(Constants.REFRESH_RATE);
@@ -96,14 +97,14 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 		// The snake is being drawn
 		g.setColor(Color.BLUE);
-		g.fillRect((int) Snake.r.getCenterX(), (int) Snake.r.getCenterY(),
-				(int) Snake.r.getWidth(), (int) Snake.r.getHeight());
+		g.fillRect((int) snake.getSnakeX(), (int) snake.getSnakeY(),
+				(int) Constants.SNAKE_SIZE, (int) Constants.SNAKE_SIZE);
 
 		// The fruit is to get painted
-		g.setColor(Color.RED);
-		g.fillOval((int) fruit.getCenterX(),
-				(int) fruit.getCenterY(), (int) fruit.getWidth(),
-				(int) fruit.getHeight());
+//		g.setColor(Color.RED);
+//		g.fillOval((int) fruit.getCenterX(),
+//				(int) fruit.getCenterY(), (int) fruit.getWidth(),
+//				(int) fruit.getHeight());
 
 		g.setColor(Color.BLACK);
 		g.drawString("The Snake Game", 870, 90);

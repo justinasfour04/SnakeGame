@@ -8,7 +8,10 @@ public class Constants {
 	public static final int MAX_BOUNDARY_X = 790;
 	public static final int MAX_BOUNDARY_Y = 470;
 	public static final int MOVE_SPEED = 3;
+	public static final int START_SPEED = 0;
 	public static final int SNAKE_SIZE = 10;
+	public static final int SNAKE_STARTING_POSX = 395;
+	public static final int SNAKE_STARTING_POSY = 295;
 	
 	//Fruit//
 	public static final int FRUIT_SIZE = 10;

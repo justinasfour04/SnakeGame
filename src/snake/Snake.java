@@ -1,83 +1,83 @@
 package snake;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.ListIterator;
 
-import fruit.Fruit;
 import utility.Constants;
 import utility.Constants.Direction;
+import fruit.Fruit;
+
 public class Snake {
 
-	private int currentXPos = 395;
-	private int currentYPos = 235;
-	
-	private int currentSpeedX = 0;
-	private int currentSpeedY = 0;
+	private int currentXPos;
+	private int currentYPos;
+
+	private int currentSpeed;
+
+	private ArrayList<Rectangle> body;
 
 	private Direction currentDirection;
 
-	public static Rectangle r = new Rectangle(0, 0, 0, 0);
-	
-	//Need to figure out a way to get the update not to stop moving my snake around
-	//Right now what is happening is because of the keyReleased it stops all movement because it can't enter if statement 
-	//Need to fix if statement
+	private static Snake snake = null;
+
+	private Snake() {
+		currentXPos = Constants.SNAKE_STARTING_POSX;
+		currentYPos = Constants.SNAKE_STARTING_POSY;
+
+		currentSpeed = Constants.START_SPEED;
+		body = new ArrayList<Rectangle>();
+		body.add(new Rectangle(currentXPos, currentYPos, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE));
+	}
+
+	public static Snake getInstance() {
+		if (snake == null)
+			snake = new Snake();
+
+		return snake;
+	}
+
+	// Need to figure out a way to get the update not to stop moving my snake
+	// around
+	// Right now what is happening is because of the keyReleased it stops all
+	// movement because it can't enter if statement
+	// Need to fix if statement
 	public void update() {
-		
-		r.setRect(currentXPos, currentYPos, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
-		
 		if (currentDirection == Direction.UP)
-			move(Direction.UP);
+			if (currentDirection == Direction.DOWN)
+				move(Direction.UP);
 		else if (currentDirection == Direction.DOWN)
 			move(Direction.DOWN);
 		else if (currentDirection == Direction.RIGHT)
 			move(Direction.RIGHT);
 		else
-			move(Direction.LEFT);			
-			
-		// prevents snake from moving out of bounds
-		int posX = currentXPos + currentSpeedX;
-		int posY = currentYPos + currentSpeedY;
-
-		//need to fix boundary conditions for better collision detection later 
-		//the corners of the screen don't stop snake from going out of screen
-		if (posX <= Constants.MIN_BOUNDARY_X) {
-			currentXPos = Constants.MIN_BOUNDARY_X + Constants.SNAKE_SIZE;
-		} else if (posY <= Constants.MIN_BOUNDARY_Y) {
-			currentYPos =Constants. MIN_BOUNDARY_Y + Constants.SNAKE_SIZE;
-		} else if (posX >= Constants.MAX_BOUNDARY_X) {
-			currentXPos = Constants.MAX_BOUNDARY_X - Constants.SNAKE_SIZE;
-		} else if (posY >= Constants.MAX_BOUNDARY_Y) {
-			currentYPos = Constants.MAX_BOUNDARY_Y - Constants.SNAKE_SIZE;
-		} else if (posX <= Constants.MIN_BOUNDARY_X && posY <= Constants.MIN_BOUNDARY_Y) {
-			currentXPos = Constants.MIN_BOUNDARY_X + 1;
-			currentYPos = Constants.MIN_BOUNDARY_Y + 1;
-		} else if (posX <= Constants.MIN_BOUNDARY_X && posY >= Constants.MAX_BOUNDARY_Y) {
-			currentXPos = Constants.MIN_BOUNDARY_X + 1;
-			currentYPos = Constants.MAX_BOUNDARY_Y - 1;
-		} else if (posX >= Constants.MAX_BOUNDARY_X && posY >= Constants.MAX_BOUNDARY_Y) {
-			currentXPos = Constants.MAX_BOUNDARY_X - 1;
-			currentYPos = Constants.MAX_BOUNDARY_Y - 1;
-		} else if (posX >= Constants.MAX_BOUNDARY_X && posY <= Constants.MIN_BOUNDARY_Y) {
-			currentXPos = Constants.MAX_BOUNDARY_X - 1;
-			currentYPos = Constants.MIN_BOUNDARY_Y + 1;
-		}
-
+			move(Direction.LEFT);
+		
+//		ListIterator bodyIterator = (ListIterator) body.iterator();
+//		while (bodyIterator.hasNext())
+//			((Rectangle) bodyIterator.next()).setLocation(currentXPos, currentYPos);
 	}
 
 	public void move(Direction direction) {
 		switch (direction) {
 		case UP:
-			currentSpeedX -= Constants.MOVE_SPEED;
+			currentYPos -= Constants.MOVE_SPEED;
 			break;
 		case DOWN:
-			currentSpeedY += Constants.MOVE_SPEED;
+			currentYPos += Constants.MOVE_SPEED;
 			break;
 		case RIGHT:
-			currentSpeedX += Constants.MOVE_SPEED;
+			currentXPos += Constants.MOVE_SPEED;
 			break;
 		case LEFT:
-			currentSpeedY -= Constants.MOVE_SPEED;
+			currentXPos -= Constants.MOVE_SPEED;
 			break;
 		}
+	}
+
+	public boolean intersects(Fruit fruit) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	public int getSnakeX() {
@@ -88,12 +88,8 @@ public class Snake {
 		return currentYPos;
 	}
 
-	public int getSpeedX() {
-		return currentSpeedX;
-	}
-
-	public int getSpeedY() {
-		return currentSpeedY;
+	public int getSpeed() {
+		return currentSpeed;
 	}
 
 	public void setSnakeX(int snakeX) {
@@ -104,24 +100,15 @@ public class Snake {
 		this.currentYPos = snakeY;
 	}
 
-	public void setSpeedX(int speedX) {
-		this.currentSpeedX = speedX;
-	}
-
-	public void setSpeedY(int speedY) {
-		this.currentSpeedY = speedY;
+	public void setSpeed(int speed) {
+		this.currentSpeed = speed;
 	}
 
 	public void setDirection(Direction d) {
 		this.currentDirection = d;
 	}
-	
-	public Direction getDirection(){
-		return this.currentDirection;
-	}
 
-	public boolean intersects(Fruit fruit) {
-		// TODO Auto-generated method stub
-		return false;
+	public Direction getDirection() {
+		return this.currentDirection;
 	}
 }
