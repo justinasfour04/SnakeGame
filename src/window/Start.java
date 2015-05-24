@@ -13,6 +13,7 @@ import java.awt.event.KeyListener;
 import controllers.GameController;
 import snake.Snake;
 import utility.Constants;
+import utility.Constants.Direction;
 
 public class Start extends Applet implements Runnable, KeyListener {
 
@@ -50,7 +51,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 		while (true) {
 
 			this.repaint();
-//			fruit.update();
+			// fruit.update();
 			snake.update();
 			try {
 				Thread.sleep(Constants.REFRESH_RATE);
@@ -62,12 +63,12 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void stop() {
-		
+
 	}
 
 	@Override
 	public void destroy() {
-		
+
 	}
 
 	@Override
@@ -92,8 +93,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 		g.drawLine(10, 10, 10, 478); // Left border
 		g.drawLine(10, 10, 800, 10); // Top border
 		g.drawLine(10, 478, 800, 478); // Bottom border
-		g.drawLine(800, 10, 800, 478); // Right border 
-		
+		g.drawLine(800, 10, 800, 478); // Right border
 
 		// The snake is being drawn
 		g.setColor(Color.BLUE);
@@ -101,10 +101,10 @@ public class Start extends Applet implements Runnable, KeyListener {
 				(int) Constants.SNAKE_SIZE, (int) Constants.SNAKE_SIZE);
 
 		// The fruit is to get painted
-//		g.setColor(Color.RED);
-//		g.fillOval((int) fruit.getCenterX(),
-//				(int) fruit.getCenterY(), (int) fruit.getWidth(),
-//				(int) fruit.getHeight());
+		// g.setColor(Color.RED);
+		// g.fillOval((int) fruit.getCenterX(),
+		// (int) fruit.getCenterY(), (int) fruit.getWidth(),
+		// (int) fruit.getHeight());
 
 		g.setColor(Color.BLACK);
 		g.drawString("The Snake Game", 870, 90);
@@ -119,22 +119,16 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP:
-			snake.setDirection(Constants.Direction.UP);
-			break;
+		int key = e.getKeyCode();
 
-		case KeyEvent.VK_DOWN:
-			snake.setDirection(Constants.Direction.DOWN);
-			break;
-
-		case KeyEvent.VK_RIGHT:
-			snake.setDirection(Constants.Direction.RIGHT);
-			break;
-
-		case KeyEvent.VK_LEFT:
-			snake.setDirection(Constants.Direction.LEFT);
-			break;
+		if (key == KeyEvent.VK_UP && snake.getDirection() != Direction.DOWN) {
+			snake.setDirection(Direction.UP);
+		} else if (key == KeyEvent.VK_DOWN && snake.getDirection() != Direction.UP) {
+			snake.setDirection(Direction.DOWN);
+		} else if (key == KeyEvent.VK_RIGHT && snake.getDirection() != Direction.LEFT) {
+			snake.setDirection(Direction.RIGHT);
+		} else if (key == KeyEvent.VK_LEFT && snake.getDirection() != Direction.RIGHT) {
+			snake.setDirection(Direction.LEFT);
 		}
 	}
 

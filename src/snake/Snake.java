@@ -2,6 +2,7 @@ package snake;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ListIterator;
 
 import utility.Constants;
@@ -44,24 +45,23 @@ public class Snake {
 	// Need to fix if statement
 	public void update() {
 		if (currentDirection == Direction.UP)
-			if (currentDirection == Direction.DOWN)
-				move(Direction.UP);
+			move(Direction.UP);
 		else if (currentDirection == Direction.DOWN)
 			move(Direction.DOWN);
 		else if (currentDirection == Direction.RIGHT)
 			move(Direction.RIGHT);
-		else
+		else if (currentDirection == Direction.LEFT)
 			move(Direction.LEFT);
-		
-//		ListIterator bodyIterator = (ListIterator) body.iterator();
-//		while (bodyIterator.hasNext())
-//			((Rectangle) bodyIterator.next()).setLocation(currentXPos, currentYPos);
+
+		Iterator<Rectangle> bodyIterator = body.iterator();
+		while (bodyIterator.hasNext())
+			bodyIterator.next().setLocation(currentXPos, currentYPos);
 	}
 
 	public void move(Direction direction) {
 		switch (direction) {
 		case UP:
-			currentYPos -= Constants.MOVE_SPEED;
+			currentYPos -= Constants.MOVE_SPEED;		
 			break;
 		case DOWN:
 			currentYPos += Constants.MOVE_SPEED;
