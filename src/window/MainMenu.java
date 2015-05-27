@@ -12,7 +12,11 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JTextArea;
 import javax.swing.text.JTextComponent;
+
+import controllers.Game;
+import utility.Constants;
 
 public class MainMenu extends JFrame {
 
@@ -33,10 +37,11 @@ public class MainMenu extends JFrame {
 		setTitle("Snake Game");
 		setFocusable(false);
 		setResizable(false);
-		setSize(800, 600);
+		setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
+		pack();
 	}
 
 	private void createButton() {
@@ -44,28 +49,40 @@ public class MainMenu extends JFrame {
 		startButton.setMaximumSize(new Dimension(50, 50));
 		JButton quitButton = new JButton("Quit");
 		quitButton.setMaximumSize(new Dimension(50, 50));
-		
+		JButton settingsButton = new JButton("Settings");
+		settingsButton.setMaximumSize(new Dimension(50, 50));
+		JTextComponent title = new JTextArea("SNAKE GAME");
+
 		startButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO: start game when button pressed
+				Game game = new Game();
 			}
 		});
 		quitButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		
-		JComponent[] arg = new JComponent[2];
-		arg[0] = startButton;
-		arg[1] = quitButton;
+
+		settingsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO settings menu
+				SettingsMenu settings = new SettingsMenu();
+			}
+		});
+
+		ArrayList<JComponent> arg = new ArrayList<JComponent>();
+		arg.add(startButton);
+		arg.add(quitButton);
+		arg.add(settingsButton);
 		createLayout(arg);
 	}
 
-	private void createLayout(JComponent... components ) {
+	private void createLayout(ArrayList<JComponent> arg) {
 		Container pane = getContentPane();
 		GroupLayout gLayout = new GroupLayout(pane);
 		pane.setLayout(gLayout);
@@ -73,12 +90,12 @@ public class MainMenu extends JFrame {
 		gLayout.setAutoCreateContainerGaps(true);
 		gLayout.setAutoCreateGaps(true);
 
-		gLayout.setHorizontalGroup(gLayout.createSequentialGroup().addGroup(
-				gLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(components[0])
-						.addComponent(components[1])));
+		gLayout.setHorizontalGroup(gLayout
+				.createParallelGroup(GroupLayout.Alignment.CENTER)
+				.addGap(Constants.WINDOW_WIDTH / 2).addComponent(arg.get(0))
+				.addComponent(arg.get(2)).addComponent(arg.get(1)));
 		gLayout.setVerticalGroup(gLayout.createSequentialGroup()
-				.addComponent(components[0])
-				.addComponent(components[1]));
-
+				.addGap(Constants.WINDOW_HEIGHT / 2).addComponent(arg.get(0))
+				.addComponent(arg.get(2)).addComponent(arg.get(1)));
 	}
 }
