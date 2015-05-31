@@ -2,9 +2,10 @@ package controllers;
 
 import snake.Snake;
 import utility.Constants;
+import window.Menu;
 import fruit.Fruit;
 
-public class GameController {
+public class GameController extends Menu{
 
 	private int score; // TODO: Move to controller
 	private boolean isEaten;

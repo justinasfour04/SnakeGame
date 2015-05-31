@@ -1,28 +1,36 @@
 package window;
 
-import java.awt.Component;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
 
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.text.JTextComponent;
 
-import controllers.Game;
 import utility.Constants;
+import controllers.Game;
 
-public class MainMenu extends JFrame {
+public class MainMenu extends JPanel{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2492018684141315849L;
+	protected JButton startButton, quitButton, settingsButton;
+	protected JTextComponent title;
+	protected JLabel titleGame;
 
 	private static MainMenu mainMenu = null;
 
-	protected MainMenu() {
+	private MainMenu() {
 		buildMenu();
 	}
 
@@ -32,70 +40,51 @@ public class MainMenu extends JFrame {
 		return mainMenu;
 	}
 
-	private void buildMenu() {
-		createButton();
-		setTitle("Snake Game");
-		setFocusable(false);
-		setResizable(false);
-		setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
-		pack();
-	}
-
-	private void createButton() {
-		JButton startButton = new JButton("Start");
-		startButton.setMaximumSize(new Dimension(50, 50));
-		JButton quitButton = new JButton("Quit");
-		quitButton.setMaximumSize(new Dimension(50, 50));
-		JButton settingsButton = new JButton("Settings");
-		settingsButton.setMaximumSize(new Dimension(50, 50));
-		JTextComponent title = new JTextArea("SNAKE GAME");
-
-		startButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO: start game when button pressed
-				Game game = new Game();
-			}
-		});
+	public void buildMenu() {
+		JPanel buttonPanel = new JPanel();
+		JPanel titlePanel = new JPanel(new BorderLayout());
+		titleGame = new JLabel("Snake Game!!!"); 
+		setLayout(new BorderLayout());
+		setEnabled(true);
+		setBackground(Color.WHITE);
+		startButton = new JButton("Start");
+		settingsButton = new JButton("Settings");
+		quitButton = new JButton("Quit");
+		
+		startButton.setPreferredSize(Constants.BUTTON_SIZE);
+		settingsButton.setPreferredSize(Constants.BUTTON_SIZE);
+		quitButton.setPreferredSize(Constants.BUTTON_SIZE);
+		titleGame.setPreferredSize(Constants.TITLE_SIZE);
+		
+		startButton.setFont(Constants.BUTTON_FONT);
+		settingsButton.setFont(Constants.BUTTON_FONT);
+		quitButton.setFont(Constants.BUTTON_FONT);
+		titleGame.setFont(Constants.TITLE_FONT);
+		
 		quitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-
-		settingsButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO settings menu
-				SettingsMenu settings = new SettingsMenu();
-			}
-		});
-
-		ArrayList<JComponent> arg = new ArrayList<JComponent>();
-		arg.add(startButton);
-		arg.add(quitButton);
-		arg.add(settingsButton);
-		createLayout(arg);
+		
+		titlePanel.add(titleGame, BorderLayout.CENTER);
+		buttonPanel.add(startButton, FlowLayout.LEFT);
+		buttonPanel.add(settingsButton, FlowLayout.CENTER);
+		buttonPanel.add(quitButton, FlowLayout.RIGHT);
+		buttonPanel.setBackground(null);
+		
+		add(titleGame, BorderLayout.CENTER);
+		add(buttonPanel, BorderLayout.SOUTH);
+		
+		setVisible(true);
 	}
 
-	private void createLayout(ArrayList<JComponent> arg) {
-		Container pane = getContentPane();
-		GroupLayout gLayout = new GroupLayout(pane);
-		pane.setLayout(gLayout);
+	public JButton getStartButton() {
+		return startButton;
+	}
 
-		gLayout.setAutoCreateContainerGaps(true);
-		gLayout.setAutoCreateGaps(true);
-
-		gLayout.setHorizontalGroup(gLayout
-				.createParallelGroup(GroupLayout.Alignment.CENTER)
-				.addGap(Constants.WINDOW_WIDTH / 2).addComponent(arg.get(0))
-				.addComponent(arg.get(2)).addComponent(arg.get(1)));
-		gLayout.setVerticalGroup(gLayout.createSequentialGroup()
-				.addGap(Constants.WINDOW_HEIGHT / 2).addComponent(arg.get(0))
-				.addComponent(arg.get(2)).addComponent(arg.get(1)));
+	public JButton getSettingsButton() {
+		return settingsButton;
 	}
 }

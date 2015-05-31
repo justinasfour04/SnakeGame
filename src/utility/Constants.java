@@ -1,5 +1,11 @@
 package utility;
 
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+
 public class Constants {
 	
 	//Snake//
@@ -25,6 +31,11 @@ public class Constants {
 	public static final int REFRESH_RATE = 20;
 	public static final int WINDOW_WIDTH = 1000;
 	public static final int WINDOW_HEIGHT = 480;
-	
+	public static final Font BUTTON_FONT = new Font("Times New Roman", Font.BOLD, 40);
+	public static final Dimension BUTTON_SIZE = new Dimension(200, 100);
+	public static final Font TITLE_FONT = new Font("Times New Roman", Font.BOLD, 60);
+	public static final Dimension TITLE_SIZE = new Dimension(200, 100);
+	public static final Image BACKGROUND = (new ImageIcon("background.jpeg")).getImage();
+			
 	public enum Direction { UP, DOWN, LEFT, RIGHT;}
 }
