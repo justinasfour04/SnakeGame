@@ -1,45 +1,40 @@
-package controllers;
+package window;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import utility.Constants;
-import window.MainMenu;
-import window.SettingsMenu;
-import window.Start;
  
-public class Game extends JFrame{
+public class GameGUI extends JFrame{
      
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 656188609855005208L;
-	private static Game game = null;
+	private static GameGUI gameGUI = null;
 	
 	private MainMenu mainMenuPanel;
 	private SettingsMenu settingsPanel;
+	private MainGame mainGamePanel;
 	private JPanel card;
 	private CardLayout cardLayout = new CardLayout();
 
-	protected Game() {
+	protected GameGUI() {
 		buildGame();
 	}
 	
-	public static Game getInstance() {
-		if (game == null)
-			game = new Game();
-		return game;
+	public static GameGUI getInstance() {
+		if (gameGUI == null)
+			gameGUI = new GameGUI();
+		return gameGUI;
 	}
 	
 	private void buildGame() {
-		setTitle("Snake Game");
+		setTitle("Snake");
 		setFocusable(false);
 		setResizable(false);
 		setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
@@ -49,8 +44,10 @@ public class Game extends JFrame{
 		card = new JPanel(cardLayout);
 		mainMenuPanel = MainMenu.getInstance();
 		settingsPanel = SettingsMenu.getInstance();
+		mainGamePanel = MainGame.getInstance();
 		card.add(mainMenuPanel, "1");
 		card.add(settingsPanel, "2");
+		card.add(mainGamePanel, "3");
 		
 		mainMenuPanel.getSettingsButton().addActionListener(new ActionListener() {
 			@Override
@@ -61,7 +58,7 @@ public class Game extends JFrame{
 		mainMenuPanel.getStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				cardLayout.show(card, "3");
 			}
 		});
 		

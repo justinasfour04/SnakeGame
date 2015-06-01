@@ -30,7 +30,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 		this.setBackground(Color.WHITE);
 		this.setFocusable(true);
 		Frame frame = (Frame) this.getParent().getParent();
-		frame.setTitle("Snake Game");
+		frame.setTitle("Snake GuiController");
 		this.addKeyListener(this);
 
 	}
@@ -89,7 +89,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 	@Override
 	public void paint(Graphics g) {
 
-		// Game border drawing happening over here
+		// GuiController border drawing happening over here
 		g.drawLine(10, 10, 10, 478); // Left border
 		g.drawLine(10, 10, 800, 10); // Top border
 		g.drawLine(10, 478, 800, 478); // Bottom border
@@ -107,7 +107,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 		// (int) fruit.getHeight());
 
 		g.setColor(Color.BLACK);
-		g.drawString("The Snake Game", 870, 90);
+		g.drawString("The Snake GuiController", 870, 90);
 		g.drawString("Score: " + controller.getScore(), 900, 120);
 	}
 

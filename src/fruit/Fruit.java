@@ -23,7 +23,7 @@ public abstract class Fruit {
 		r1 = new Random();
 		r2 = new Random();
 		
-		//score = INITIAL_SCORE;
+		//scoreBoard = INITIAL_SCORE;
 		//TODO: Move to FruitView
 //		fruit = new Rectangle(0, 0, 0, 0);
 				

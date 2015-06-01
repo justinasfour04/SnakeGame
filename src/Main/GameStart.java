@@ -1,10 +1,10 @@
 package Main;
 
-import controllers.Game;
+import window.GameGUI;
 
 public class GameStart {
 	
 	public static void main(String[] args) {
-		Game game = Game.getInstance();
+		GameGUI gameGUI = GameGUI.getInstance();
 	}
 }

@@ -1,12 +1,8 @@
 package window;
 
-import java.awt.FlowLayout;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import controllers.Game;
 
 public class SettingsMenu extends JPanel{
 
