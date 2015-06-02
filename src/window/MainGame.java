@@ -23,18 +23,17 @@ public class MainGame extends JPanel{
 	private JPanel sidePanel, gamePanel;
 	private JLabel scoreBoard;
 	private JButton pauseButton;
-	private int score;
 	private static final int HORIZONTAL_GAP = 30;
 	private static final int VERTICAL_GAP = 120;
-	
-
+	private GameController controller;
 	private static MainGame mainGame = null;
 
 	private MainGame() {
+		controller = GameController.getUniqueInstance();
 		buildGame();
 	}
 
-	public static MainGame getInstance() {
+	public static synchronized MainGame getUniqueInstance() {
 		if (mainGame == null)
 			mainGame = new MainGame();
 		return mainGame;
@@ -45,7 +44,6 @@ public class MainGame extends JPanel{
 		gamePanel = new JPanel();
 		scoreBoard = new JLabel();
 		pauseButton = new JButton("Pause");
-		score = 0;
 		setLayout(new BorderLayout());
 		setBackground(null);
 		
@@ -54,7 +52,7 @@ public class MainGame extends JPanel{
 		
 		scoreBoard.setFont(Constants.BUTTON_FONT);
 		scoreBoard.setForeground(Color.WHITE);
-		scoreBoard.setText("Score: " + score);
+		scoreBoard.setText("Score: " + controller.getScore());
 		
 		gamePanel.setPreferredSize(Constants.GAME_SIZE);
 		sidePanel.setPreferredSize(Constants.SIDE_PANEL_SIZE);
@@ -64,7 +62,7 @@ public class MainGame extends JPanel{
 		pauseButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Pause Game
+				controller.pause();
 			}
 		});
 		

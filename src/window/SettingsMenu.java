@@ -24,7 +24,7 @@ public class SettingsMenu extends JPanel{
 		setVisible(true);
 	}
 
-	public static SettingsMenu getInstance() {
+	public static synchronized SettingsMenu getUniqueInstance() {
 		if (settingsMenu == null)
 			settingsMenu = new SettingsMenu();
 		return settingsMenu;

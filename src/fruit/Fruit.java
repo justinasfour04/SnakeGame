@@ -1,5 +1,6 @@
 package fruit;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.Random;
 
@@ -14,8 +15,12 @@ public abstract class Fruit {
 	protected int fruitXPos, fruitYPos;
 
 	protected boolean eaten;
+	protected boolean isPaused;
 	protected int value;
+	protected int defaultSpeed;
+	protected int currentSpeed;
 	
+	protected Color color;
 	
 //	protected static Rectangle fruit;//TODO: Move to FruitView
 	
@@ -56,19 +61,18 @@ public abstract class Fruit {
 		this.eaten = eaten;
 	}
 	
-	//TODO: Move to FruitView
-//	public void update() {
-//
-//		fruit.setRect(fruitXPos, fruitYPos, Constants.FRUIT_SIZE, Constants.FRUIT_SIZE);
-//
-//		if (checkCollision(Snake.r)) {
-//			setEaten(true);
-//			incrementScore();
-//			fruitXPos = 12 + r1.nextInt(790-12);
-//			fruitYPos = 12 + r2.nextInt(470-12);
-//			setEaten(false);
-//		}
-//
-//	}
+	public Color getColor(){
+		return this.color;
+	}
+	
+	public void pause(){
+		if(!isPaused){
+			this.currentSpeed = Constants.PAUSE;
+		} else{
+			this.currentSpeed = this.defaultSpeed;
+		}
+		this.isPaused = !this.isPaused;
+	}
+	
 	
 }

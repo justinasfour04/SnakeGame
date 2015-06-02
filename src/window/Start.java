@@ -3,12 +3,17 @@ package window;
 import fruit.*;
 
 import java.applet.Applet;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.JPanel;
 
 import controllers.GameController;
 import snake.Snake;
@@ -23,25 +28,77 @@ public class Start extends Applet implements Runnable, KeyListener {
 	private GameController controller;
 	private Image image;
 	private Graphics second;
-
+	
+	private FruitView fruitView;
+	private SnakeView snakeView;
+	
+	private MainMenu mainMenuPanel;
+	private SettingsMenu settingsPanel;
+	private MainGame mainGamePanel;
+	private JPanel card;
+	private CardLayout cardLayout = new CardLayout();
+	Frame frame;
+	
+	private boolean inGame;
+	
 	@Override
 	public void init() {
-		this.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-		this.setBackground(Color.WHITE);
-		this.setFocusable(true);
-		Frame frame = (Frame) this.getParent().getParent();
-		frame.setTitle("Snake GuiController");
+//		this.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+//		this.setBackground(Color.WHITE);
+//		this.setFocusable(true);
+		frame = (Frame) this.getParent().getParent();
+//		frame.setTitle("Snake GuiController");
 		this.addKeyListener(this);
-
+		
+		this.inGame = false;
+		buildGame();
+		
 	}
-
+	
+	private void buildGame() {
+		frame.setTitle("Snake");
+		frame.setFocusable(false);
+		frame.setResizable(false);
+		frame.setSize(Constants.WINDOW_WIDTH+100, Constants.WINDOW_HEIGHT+100);
+		frame.setLocationRelativeTo(null);
+		
+		
+		card = new JPanel(cardLayout);
+		mainMenuPanel = MainMenu.getUniqueInstance();
+		settingsPanel = SettingsMenu.getUniqueInstance();
+		mainGamePanel = MainGame.getUniqueInstance();
+		card.add(mainMenuPanel, "1");
+		card.add(settingsPanel, "2");
+		card.add(mainGamePanel, "3");
+		
+		mainMenuPanel.getSettingsButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(card, "2");
+			}
+		});
+		mainMenuPanel.getStartButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(card, "3");
+				setInGame(true);
+			}
+		});
+		
+		add(card);
+		setVisible(true);
+	}
+	
 	@Override
 	public void start() {
 
 		fruit = new RegularFruit();
-		controller = GameController.getInstance();
-		snake = Snake.getInstance();
-
+		controller = GameController.getUniqueInstance();
+		snake = Snake.getUniqueInstance();
+		
+		fruitView = new FruitView(fruit);
+		snakeView = new SnakeView(snake);
+		
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -53,6 +110,10 @@ public class Start extends Applet implements Runnable, KeyListener {
 			this.repaint();
 			// fruit.update();
 			snake.update();
+			if(inGame){
+				snakeView.update();
+				fruitView.update();
+			}
 			try {
 				Thread.sleep(Constants.REFRESH_RATE);
 			} catch (InterruptedException e) {
@@ -84,32 +145,14 @@ public class Start extends Applet implements Runnable, KeyListener {
 		paint(second);
 
 		g.drawImage(image, 0, 0, this);
+		
+		if(this.inGame){
+			fruitView.draw(g);
+			snakeView.draw(g);
+		}
+		
 	}
 
-	@Override
-	public void paint(Graphics g) {
-
-		// GuiController border drawing happening over here
-		g.drawLine(10, 10, 10, 478); // Left border
-		g.drawLine(10, 10, 800, 10); // Top border
-		g.drawLine(10, 478, 800, 478); // Bottom border
-		g.drawLine(800, 10, 800, 478); // Right border
-
-		// The snake is being drawn
-		g.setColor(Color.BLUE);
-		g.fillRect((int) snake.getSnakeX(), (int) snake.getSnakeY(),
-				(int) Constants.SNAKE_SIZE, (int) Constants.SNAKE_SIZE);
-
-		// The fruit is to get painted
-		// g.setColor(Color.RED);
-		// g.fillOval((int) fruit.getCenterX(),
-		// (int) fruit.getCenterY(), (int) fruit.getWidth(),
-		// (int) fruit.getHeight());
-
-		g.setColor(Color.BLACK);
-		g.drawString("The Snake GuiController", 870, 90);
-		g.drawString("Score: " + controller.getScore(), 900, 120);
-	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -134,6 +177,14 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+	}
+
+	public boolean isInGame() {
+		return inGame;
+	}
+
+	public void setInGame(boolean inGame) {
+		this.inGame = inGame;
 	}
 
 }
