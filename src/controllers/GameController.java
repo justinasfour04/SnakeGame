@@ -10,95 +10,53 @@ import java.awt.event.KeyListener;
 import snake.Snake;
 import utility.Constants;
 import utility.Constants.Direction;
-import window.GameGUI;
 import fruit.Fruit;
-import fruit.RegularFruit;
 
-public class GameController extends GameGUI implements KeyListener, ActionListener, Runnable{
+public class GameController  implements KeyListener, ActionListener{
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 7337231778649216423L;
-	private int score; // TODO: Move to controller
+	private int score; 
 	private boolean isEaten;
 	private Fruit fruit;
 	private Snake snake;
-	private GameGUI game;
 	private Image image;
 	private Graphics second;
 	private static GameController gameController = null;
-
+	private boolean isPaused;
+	
 	protected GameController() {
-		game = this;
 		score = 0;
 		isEaten = false;
+		this.isPaused = false;
 	}
 
-	public static GameController getInstance() {
+	public static synchronized GameController getUniqueInstance() {
 		if (gameController == null)
 			gameController = new GameController();
 		return gameController;
 	}
 
-	public void update(Graphics g) {
-		if (image == null) {
-			image = createImage(this.getWidth(), this.getHeight());
-			second = image.getGraphics();
-		}
 
-		second.setColor(getBackground());
-		second.fillRect(0, 0, getWidth(), getHeight());
-		second.setColor(getForeground());
-		paint(second);
-
-		g.drawImage(image, 0, 0, this);
-	}
-
-	public void start() {
-
-		fruit = new RegularFruit();
-		gameController = GameController.getInstance();
-		snake = Snake.getInstance();
-
-		Thread thread = new Thread(this);
-		thread.start();
-	}
-
-	@Override
-	public void run() {
-		while (true) {
-
-			this.repaint();
-			// fruit.update();
-			snake.update();
-			try {
-				Thread.sleep(Constants.REFRESH_RATE);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	// TODO: Move to controller
-	public boolean checkCollision() {
+	
+	public boolean checkCollision(Fruit fruit) {
 		if (snake.intersects(fruit))
 			return true;
 		return false;
 	}
 
-	// TODO: Move to controller
+	
 	public void incrementScore() {
 		if (isEaten)
 			setScore(getScore() + 1);
 	}
 
-	// TODO: Move to controller
+	
 	public int getScore() {
 		return score;
 	}
 
-	// TODO: Move to controller
+	
 	public void setScore(int score) {
 		this.score = score;
 	}
@@ -127,6 +85,11 @@ public class GameController extends GameGUI implements KeyListener, ActionListen
 			snake.setSnakeX(Constants.MAX_BOUNDARY_X - 1);
 			snake.setSnakeY(Constants.MIN_BOUNDARY_Y + 1);
 		}
+	}
+	
+	public void pause(){
+		this.snake.pause();
+		this.fruit.pause();
 	}
 
 	@Override

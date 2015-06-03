@@ -15,7 +15,9 @@ public class Snake {
 	private int currentYPos;
 
 	private int currentSpeed;
-
+	
+	private boolean isPaused;
+	
 	private ArrayList<Rectangle> body;
 
 	private Direction currentDirection;
@@ -29,9 +31,10 @@ public class Snake {
 		currentSpeed = Constants.START_SPEED;
 		body = new ArrayList<Rectangle>();
 		body.add(new Rectangle(currentXPos, currentYPos, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE));
+		this.isPaused = false;
 	}
 
-	public static Snake getInstance() {
+	public static synchronized Snake getUniqueInstance() {
 		if (snake == null)
 			snake = new Snake();
 
@@ -110,5 +113,14 @@ public class Snake {
 
 	public Direction getDirection() {
 		return this.currentDirection;
+	}
+	
+	public void pause(){
+		if(!isPaused){
+			this.currentSpeed = Constants.PAUSE;
+		} else{
+			this.currentSpeed = Constants.START_SPEED;
+		}
+		this.isPaused = !this.isPaused;
 	}
 }

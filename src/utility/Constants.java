@@ -1,5 +1,6 @@
 package utility;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -7,7 +8,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Constants {
-
+	
 	// Snake//
 	public static final int MIN_BOUNDARY_X = 0;
 	public static final int MIN_BOUNDARY_Y = 0;
@@ -18,6 +19,7 @@ public class Constants {
 	public static final int SNAKE_SIZE = 10;
 	public static final int SNAKE_STARTING_POSX = 395;
 	public static final int SNAKE_STARTING_POSY = 295;
+	public static final Color SNAKE_COLOR = new Color(123,86,32);
 
 	// Fruit//
 	public static final int FRUIT_SIZE = 10;
@@ -26,6 +28,9 @@ public class Constants {
 	public static final int RANDOM_FRUIT_VALUE = 5;
 	public static final int LINEAR_FRUIT_SPEED = 5; // placeholder value
 	public static final int RANDOM_FRUIT_SPEED = 10; // placeholder value
+	public static final Color REGULAR_FRUIT_COLOR = new Color(255,0,0); // placeholder value
+	public static final Color LINEAR_FRUIT_COLOR = new Color(0,255,0); // placeholder value
+	public static final Color RANDOM_FRUIT_COLOR = new Color(0,0,255); // placeholder value
 
 	// Start//
 	public static final int REFRESH_RATE = 20;
@@ -38,7 +43,11 @@ public class Constants {
 	public static final Image BACKGROUND = (new ImageIcon("background.jpeg")).getImage();
 	public static final Dimension SIDE_PANEL_SIZE = new Dimension(WINDOW_WIDTH / 4, WINDOW_HEIGHT);
 	public static final Dimension GAME_SIZE = new Dimension(WINDOW_WIDTH * 3 / 4, WINDOW_HEIGHT);
-
+	
+	//MISC//
+	public static final int PAUSE = 0;
+	
+	//Directions//
 	public enum Direction {
 		UP, DOWN, LEFT, RIGHT;
 	}

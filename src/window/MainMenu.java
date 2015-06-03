@@ -29,16 +29,16 @@ public class MainMenu extends JPanel{
 		buildMenu();
 	}
 
-	public static MainMenu getInstance() {
+	public static synchronized MainMenu getUniqueInstance() {
 		if (mainMenu == null)
 			mainMenu = new MainMenu();
 		return mainMenu;
 	}
 
 	public void buildMenu() {
-		JPanel buttonPanel = new JPanel();
-		JPanel titlePanel = new JPanel();
-		titleGame = new JLabel("Snake Game"); 
+		JPanel buttonPanel = new JPanel(new FlowLayout());
+		JPanel titlePanel = new JPanel(new BorderLayout());
+		titleGame = new JLabel("Snake."); 
 		setLayout(new BorderLayout());
 		setEnabled(true);
 		setBackground(Color.WHITE);
