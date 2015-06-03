@@ -31,18 +31,13 @@ public class Constants {
 	public static final int REFRESH_RATE = 20;
 	public static final int WINDOW_WIDTH = 1000;
 	public static final int WINDOW_HEIGHT = 480;
-	public static final Font BUTTON_FONT = new Font("Times New Roman",
-			Font.BOLD, 40);
+	public static final Font BUTTON_FONT = new Font("Times New Roman", Font.BOLD, 40);
 	public static final Dimension BUTTON_SIZE = new Dimension(200, 100);
-	public static final Font TITLE_FONT = new Font("Times New Roman",
-			Font.BOLD, 60);
-	public static final Dimension TITLE_SIZE = new Dimension(200, 100);
-	public static final Image BACKGROUND = (new ImageIcon("background.jpeg"))
-			.getImage();
-	public static final Dimension SIDE_PANEL_SIZE = new Dimension(
-			WINDOW_WIDTH / 4, WINDOW_HEIGHT);
-	public static final Dimension GAME_SIZE = new Dimension(
-			WINDOW_WIDTH * 3 / 4, WINDOW_HEIGHT);
+	public static final Font TITLE_FONT = new Font("Times New Roman", Font.BOLD, 60);
+	public static final Dimension TITLE_SIZE = new Dimension(400, 100);
+	public static final Image BACKGROUND = (new ImageIcon("background.jpeg")).getImage();
+	public static final Dimension SIDE_PANEL_SIZE = new Dimension(WINDOW_WIDTH / 4, WINDOW_HEIGHT);
+	public static final Dimension GAME_SIZE = new Dimension(WINDOW_WIDTH * 3 / 4, WINDOW_HEIGHT);
 
 	public enum Direction {
 		UP, DOWN, LEFT, RIGHT;

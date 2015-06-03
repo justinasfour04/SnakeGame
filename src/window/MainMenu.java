@@ -37,8 +37,8 @@ public class MainMenu extends JPanel{
 
 	public void buildMenu() {
 		JPanel buttonPanel = new JPanel();
-		JPanel titlePanel = new JPanel(new BorderLayout());
-		titleGame = new JLabel("Snake Game!!!"); 
+		JPanel titlePanel = new JPanel();
+		titleGame = new JLabel("Snake Game"); 
 		setLayout(new BorderLayout());
 		setEnabled(true);
 		setBackground(Color.WHITE);
@@ -63,13 +63,14 @@ public class MainMenu extends JPanel{
 			}
 		});
 		
-		titlePanel.add(titleGame, BorderLayout.CENTER);
+		titlePanel.add(titleGame);
 		buttonPanel.add(startButton, FlowLayout.LEFT);
 		buttonPanel.add(settingsButton, FlowLayout.CENTER);
 		buttonPanel.add(quitButton, FlowLayout.RIGHT);
 		buttonPanel.setBackground(null);
+		titlePanel.setBackground(null);
 		
-		add(titleGame, BorderLayout.CENTER);
+		add(titlePanel, BorderLayout.NORTH);
 		add(buttonPanel, BorderLayout.SOUTH);
 		
 		setVisible(true);
