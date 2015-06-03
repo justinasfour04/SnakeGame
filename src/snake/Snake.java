@@ -27,8 +27,8 @@ public class Snake {
 	private Snake() {
 		currentXPos = Constants.SNAKE_STARTING_POSX;
 		currentYPos = Constants.SNAKE_STARTING_POSY;
-
-		currentSpeed = Constants.START_SPEED;
+		currentDirection = null;
+		currentSpeed = Constants.MOVE_SPEED;
 		body = new ArrayList<Rectangle>();
 		body.add(new Rectangle(currentXPos, currentYPos, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE));
 		this.isPaused = false;
@@ -55,7 +55,11 @@ public class Snake {
 			move(Direction.RIGHT);
 		else if (currentDirection == Direction.LEFT)
 			move(Direction.LEFT);
-
+		
+//		if(currentDirection != null){
+//			System.out.println("current direction: " + currentDirection.toString());
+//		}
+//		System.out.println("current speeed: " + currentSpeed);
 		Iterator<Rectangle> bodyIterator = body.iterator();
 		while (bodyIterator.hasNext())
 			bodyIterator.next().setLocation(currentXPos, currentYPos);
@@ -64,16 +68,16 @@ public class Snake {
 	public void move(Direction direction) {
 		switch (direction) {
 		case UP:
-			currentYPos -= Constants.MOVE_SPEED;		
+			currentYPos -= currentSpeed;		
 			break;
 		case DOWN:
-			currentYPos += Constants.MOVE_SPEED;
+			currentYPos += currentSpeed;
 			break;
 		case RIGHT:
-			currentXPos += Constants.MOVE_SPEED;
+			currentXPos += currentSpeed;
 			break;
 		case LEFT:
-			currentXPos -= Constants.MOVE_SPEED;
+			currentXPos -= currentSpeed;
 			break;
 		}
 	}
@@ -119,7 +123,7 @@ public class Snake {
 		if(!isPaused){
 			this.currentSpeed = Constants.PAUSE;
 		} else{
-			this.currentSpeed = Constants.START_SPEED;
+			this.currentSpeed = Constants.MOVE_SPEED;
 		}
 		this.isPaused = !this.isPaused;
 	}

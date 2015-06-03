@@ -45,19 +45,23 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void init() {
 //		this.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 //		this.setBackground(Color.WHITE);
-//		this.setFocusable(true);
+		this.setFocusable(true);
 		frame = (Frame) this.getParent().getParent();
 //		frame.setTitle("Snake GuiController");
 		this.addKeyListener(this);
 		
 		this.inGame = false;
+		
+		fruit = new RegularFruit();
+		snake = Snake.getUniqueInstance();
+		controller = GameController.getUniqueInstance(snake, fruit);
+		
 		buildGame();
 		
 	}
 	
 	private void buildGame() {
 		frame.setTitle("Snake");
-		frame.setFocusable(false);
 		frame.setResizable(false);
 		frame.setSize(Constants.WINDOW_WIDTH+100, Constants.WINDOW_HEIGHT+100);
 		frame.setLocationRelativeTo(null);
@@ -92,9 +96,6 @@ public class Start extends Applet implements Runnable, KeyListener {
 	@Override
 	public void start() {
 
-		fruit = new RegularFruit();
-		controller = GameController.getUniqueInstance();
-		snake = Snake.getUniqueInstance();
 		
 		fruitView = new FruitView(fruit);
 		snakeView = new SnakeView(snake);
@@ -113,6 +114,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 			if(inGame){
 				snakeView.update();
 				fruitView.update();
+				controller.setGameBoundaries(snake);
 			}
 			try {
 				Thread.sleep(Constants.REFRESH_RATE);
@@ -164,15 +166,16 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_UP && snake.getDirection() != Direction.DOWN) {
+		if (key == KeyEvent.VK_UP && (snake.getDirection() != Direction.DOWN || snake.getDirection() == null)) {
 			snake.setDirection(Direction.UP);
-		} else if (key == KeyEvent.VK_DOWN && snake.getDirection() != Direction.UP) {
+		} else if (key == KeyEvent.VK_DOWN && (snake.getDirection() != Direction.UP || snake.getDirection() == null)) {
 			snake.setDirection(Direction.DOWN);
-		} else if (key == KeyEvent.VK_RIGHT && snake.getDirection() != Direction.LEFT) {
+		} else if (key == KeyEvent.VK_RIGHT && (snake.getDirection() != Direction.LEFT || snake.getDirection() == null)) {
 			snake.setDirection(Direction.RIGHT);
-		} else if (key == KeyEvent.VK_LEFT && snake.getDirection() != Direction.RIGHT) {
+		} else if (key == KeyEvent.VK_LEFT && (snake.getDirection() != Direction.RIGHT || snake.getDirection() == null)) {
 			snake.setDirection(Direction.LEFT);
 		}
+//		System.out.println("From Start");
 	}
 
 	@Override

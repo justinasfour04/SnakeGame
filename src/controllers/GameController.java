@@ -12,7 +12,7 @@ import utility.Constants;
 import utility.Constants.Direction;
 import fruit.Fruit;
 
-public class GameController  implements KeyListener, ActionListener{
+public class GameController {
 
 	
 	private static final long serialVersionUID = 7337231778649216423L;
@@ -25,19 +25,23 @@ public class GameController  implements KeyListener, ActionListener{
 	private static GameController gameController = null;
 	private boolean isPaused;
 	
-	protected GameController() {
+	protected GameController(Snake snake, Fruit fruit) {
 		score = 0;
 		isEaten = false;
 		this.isPaused = false;
+		this.snake = snake;
+		this.fruit = fruit;
 	}
 
 	public static synchronized GameController getUniqueInstance() {
-		if (gameController == null)
-			gameController = new GameController();
 		return gameController;
 	}
 
-
+	public static synchronized GameController getUniqueInstance(Snake snake, Fruit fruit) {
+		if (gameController == null)
+			gameController = new GameController(snake, fruit);
+		return gameController;
+	}
 	
 	public boolean checkCollision(Fruit fruit) {
 		if (snake.intersects(fruit))
@@ -92,36 +96,4 @@ public class GameController  implements KeyListener, ActionListener{
 		this.fruit.pause();
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-
-		if (key == KeyEvent.VK_UP && snake.getDirection() != Direction.DOWN) {
-			snake.setDirection(Direction.UP);
-		} else if (key == KeyEvent.VK_DOWN && snake.getDirection() != Direction.UP) {
-			snake.setDirection(Direction.DOWN);
-		} else if (key == KeyEvent.VK_RIGHT && snake.getDirection() != Direction.LEFT) {
-			snake.setDirection(Direction.RIGHT);
-		} else if (key == KeyEvent.VK_LEFT && snake.getDirection() != Direction.RIGHT) {
-			snake.setDirection(Direction.LEFT);
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
 }
