@@ -49,6 +49,6 @@ public class Constants {
 	
 	//Directions//
 	public enum Direction {
-		NORTH, SOUTH, WEST, EAST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST;
+		NORTH, SOUTH, WEST, EAST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST, NONE;
 	}
 }

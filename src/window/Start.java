@@ -24,12 +24,14 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private Snake snake;
-	private Fruit fruit;
+	//private Fruit fruit;
+	private FruitGenerator fruitGenerator;
 	private GameController controller;
 	private Image image;
 	private Graphics second;
 	
-	private FruitView fruitView;
+	//private FruitView fruitView;
+	private FruitGroupView fruitGroupView;
 	private SnakeView snakeView;
 	
 	private MainMenu mainMenuPanel;
@@ -54,10 +56,12 @@ public class Start extends Applet implements Runnable, KeyListener {
 		
 		//fruit = new RegularFruit();
 		//fruit = new LinearFruit();
-		fruit = new RandomFruit();
+		//fruit = new RandomFruit();
 		snake = Snake.getUniqueInstance();
-		controller = GameController.getUniqueInstance(snake, fruit);
+		fruitGenerator = FruitGenerator.getUniqueInstance();
 		
+		//controller = GameController.getUniqueInstance(snake, fruit);
+		controller = GameController.getUniqueInstance(snake, fruitGenerator);
 		buildGame();
 		
 	}
@@ -99,24 +103,31 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void start() {
 
 		
-		fruitView = new FruitView(fruit);
+		//fruitView = new FruitView(fruit);
+		fruitGroupView = new FruitGroupView(fruitGenerator);
 		snakeView = new SnakeView(snake);
 		
 		Thread thread = new Thread(this);
+//		Thread fruit = new Thread(fruitGenerator);
+//		fruit.start();
 		thread.start();
 	}
 
 	@Override
 	public void run() {
 		while (true) {
-
+			
+			
 			this.repaint();
-			fruit.update();
+			//fruit.update();
+			fruitGenerator.update();
 			snake.update();
 			if(inGame){
 				snakeView.update();
-				fruitView.update();
-				controller.setGameBoundaries(snake, fruit);
+				//fruitView.update();
+				fruitGroupView.update();
+				//controller.setGameBoundaries(snake, fruit);
+				controller.setGameBoundaries(snake, fruitGenerator);
 			}
 			try {
 				Thread.sleep(Constants.REFRESH_RATE);
@@ -151,7 +162,8 @@ public class Start extends Applet implements Runnable, KeyListener {
 		g.drawImage(image, 0, 0, this);
 		
 		if(this.inGame){
-			fruitView.draw(g);
+			//fruitView.draw(g);
+			fruitGroupView.draw(g);
 			snakeView.draw(g);
 		}
 		
