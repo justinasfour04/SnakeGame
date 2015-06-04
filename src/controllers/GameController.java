@@ -105,7 +105,7 @@ public class GameController{
 			if (snakeView.getSnakeView().intersects(fruitView.getFruitDisplay())){ //check to see if the snake display rectangle intersects the fruits'
 				if(!fruitView.getFruit().isEaten()){
 					fruitView.getFruit().setEaten(true);
-					this.score++;
+					this.score+= fruitView.getFruit().getValue();
 					fruitGenerator.removeFruit(fruitView.getFruit());//remove the fruit from the list of fruits in game, as well as the display
 					fruitGroupView.getFruitViews().remove(fruitView);
 				}

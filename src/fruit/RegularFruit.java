@@ -35,7 +35,6 @@ public class RegularFruit extends Fruit {
 	@Override
 	public Direction getDirection() {
 		return Direction.NONE;
-	}
-	
+	}	
 	
 }

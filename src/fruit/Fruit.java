@@ -88,6 +88,10 @@ public abstract class Fruit {
 		return this.color;
 	}
 	
+	public int getValue(){
+		return this.value;
+	}
+	
 	/**
 	 * Pause/Unpause the fruit
 	 */
