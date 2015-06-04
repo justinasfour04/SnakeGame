@@ -47,14 +47,14 @@ public class Snake {
 	// movement because it can't enter if statement
 	// Need to fix if statement
 	public void update() {
-		if (currentDirection == Direction.UP)
-			move(Direction.UP);
-		else if (currentDirection == Direction.DOWN)
-			move(Direction.DOWN);
-		else if (currentDirection == Direction.RIGHT)
-			move(Direction.RIGHT);
-		else if (currentDirection == Direction.LEFT)
-			move(Direction.LEFT);
+		if (currentDirection == Direction.NORTH)
+			move(Direction.NORTH);
+		else if (currentDirection == Direction.SOUTH)
+			move(Direction.SOUTH);
+		else if (currentDirection == Direction.EAST)
+			move(Direction.EAST);
+		else if (currentDirection == Direction.WEST)
+			move(Direction.WEST);
 		
 //		if(currentDirection != null){
 //			System.out.println("current direction: " + currentDirection.toString());
@@ -67,16 +67,16 @@ public class Snake {
 
 	public void move(Direction direction) {
 		switch (direction) {
-		case UP:
+		case NORTH:
 			currentYPos -= currentSpeed;		
 			break;
-		case DOWN:
+		case SOUTH:
 			currentYPos += currentSpeed;
 			break;
-		case RIGHT:
+		case EAST:
 			currentXPos += currentSpeed;
 			break;
-		case LEFT:
+		case WEST:
 			currentXPos -= currentSpeed;
 			break;
 		}

@@ -26,8 +26,8 @@ public class Constants {
 	public static final int REGULAR_FRUIT_VALUE = 1;
 	public static final int LINEAR_FRUIT_VALUE = 3;
 	public static final int RANDOM_FRUIT_VALUE = 5;
-	public static final int LINEAR_FRUIT_SPEED = 5; // placeholder value
-	public static final int RANDOM_FRUIT_SPEED = 10; // placeholder value
+	public static final int LINEAR_FRUIT_SPEED = 2; // placeholder value
+	public static final int RANDOM_FRUIT_SPEED = 3; // placeholder value
 	public static final Color REGULAR_FRUIT_COLOR = new Color(255,0,0); // placeholder value
 	public static final Color LINEAR_FRUIT_COLOR = new Color(0,255,0); // placeholder value
 	public static final Color RANDOM_FRUIT_COLOR = new Color(0,0,255); // placeholder value
@@ -49,6 +49,6 @@ public class Constants {
 	
 	//Directions//
 	public enum Direction {
-		UP, DOWN, LEFT, RIGHT;
+		NORTH, SOUTH, WEST, EAST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST, NONE;
 	}
 }

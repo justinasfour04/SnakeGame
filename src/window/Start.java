@@ -24,12 +24,14 @@ public class Start extends Applet implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private Snake snake;
-	private Fruit fruit;
+	//private Fruit fruit;
+	private FruitGenerator fruitGenerator;
 	private GameController controller;
 	private Image image;
 	private Graphics second;
 	
-	private FruitView fruitView;
+	//private FruitView fruitView;
+	private FruitGroupView fruitGroupView;
 	private SnakeView snakeView;
 	
 	private MainMenu mainMenuPanel;
@@ -52,10 +54,14 @@ public class Start extends Applet implements Runnable, KeyListener {
 		
 		this.inGame = false;
 		
-		fruit = new RegularFruit();
+		//fruit = new RegularFruit();
+		//fruit = new LinearFruit();
+		//fruit = new RandomFruit();
 		snake = Snake.getUniqueInstance();
-		controller = GameController.getUniqueInstance(snake, fruit);
+		fruitGenerator = FruitGenerator.getUniqueInstance();
 		
+		//controller = GameController.getUniqueInstance(snake, fruit);
+		controller = GameController.getUniqueInstance(snake, fruitGenerator);
 		buildGame();
 		
 	}
@@ -97,24 +103,31 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void start() {
 
 		
-		fruitView = new FruitView(fruit);
+		//fruitView = new FruitView(fruit);
+		fruitGroupView = new FruitGroupView(fruitGenerator);
 		snakeView = new SnakeView(snake);
 		
 		Thread thread = new Thread(this);
+//		Thread fruit = new Thread(fruitGenerator);
+//		fruit.start();
 		thread.start();
 	}
 
 	@Override
 	public void run() {
 		while (true) {
-
+			
+			
 			this.repaint();
-			// fruit.update();
+			//fruit.update();
+			fruitGenerator.update();
 			snake.update();
 			if(inGame){
 				snakeView.update();
-				fruitView.update();
-				controller.setGameBoundaries();
+				//fruitView.update();
+				fruitGroupView.update();
+				//controller.setGameBoundaries(snake, fruit);
+				controller.setGameBoundaries(snake, fruitGenerator);
 			}
 			try {
 				Thread.sleep(Constants.REFRESH_RATE);
@@ -149,7 +162,8 @@ public class Start extends Applet implements Runnable, KeyListener {
 		g.drawImage(image, 0, 0, this);
 		
 		if(this.inGame){
-			fruitView.draw(g);
+			//fruitView.draw(g);
+			fruitGroupView.draw(g);
 			snakeView.draw(g);
 		}
 		
@@ -166,14 +180,14 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_UP && (snake.getDirection() != Direction.DOWN || snake.getDirection() == null)) {
-			snake.setDirection(Direction.UP);
-		} else if (key == KeyEvent.VK_DOWN && (snake.getDirection() != Direction.UP || snake.getDirection() == null)) {
-			snake.setDirection(Direction.DOWN);
-		} else if (key == KeyEvent.VK_RIGHT && (snake.getDirection() != Direction.LEFT || snake.getDirection() == null)) {
-			snake.setDirection(Direction.RIGHT);
-		} else if (key == KeyEvent.VK_LEFT && (snake.getDirection() != Direction.RIGHT || snake.getDirection() == null)) {
-			snake.setDirection(Direction.LEFT);
+		if (key == KeyEvent.VK_UP && (snake.getDirection() != Direction.SOUTH || snake.getDirection() == null)) {
+			snake.setDirection(Direction.NORTH);
+		} else if (key == KeyEvent.VK_DOWN && (snake.getDirection() != Direction.NORTH || snake.getDirection() == null)) {
+			snake.setDirection(Direction.SOUTH);
+		} else if (key == KeyEvent.VK_RIGHT && (snake.getDirection() != Direction.WEST || snake.getDirection() == null)) {
+			snake.setDirection(Direction.EAST);
+		} else if (key == KeyEvent.VK_LEFT && (snake.getDirection() != Direction.EAST || snake.getDirection() == null)) {
+			snake.setDirection(Direction.WEST);
 		}
 //		System.out.println("From Start");
 	}

@@ -6,6 +6,7 @@ import java.util.Random;
 
 import snake.Snake;
 import utility.Constants;
+import utility.Constants.Direction;
 
 public abstract class Fruit {
 
@@ -74,5 +75,8 @@ public abstract class Fruit {
 		this.isPaused = !this.isPaused;
 	}
 	
-	
+	public abstract void update();
+	public abstract int getSpeed();
+	public abstract void setDirection(Direction d);
+	public abstract Direction getDirection();
 }
