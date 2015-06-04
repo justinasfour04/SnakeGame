@@ -6,10 +6,14 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
-
+/**
+ * Class of Constants
+ * @author Justin, Justin
+ *
+ */
 public class Constants {
 	
-	// Snake//
+	//Snake//
 	public static final int MIN_BOUNDARY_X = 0;
 	public static final int MIN_BOUNDARY_Y = 0;
 	public static final int MAX_BOUNDARY_X = 790;
@@ -21,7 +25,7 @@ public class Constants {
 	public static final int SNAKE_STARTING_POSY = 295;
 	public static final Color SNAKE_COLOR = new Color(123,86,32);
 
-	// Fruit//
+	//Fruit//
 	public static final int FRUIT_SIZE = 10;
 	public static final int REGULAR_FRUIT_VALUE = 1;
 	public static final int LINEAR_FRUIT_VALUE = 3;
@@ -31,8 +35,12 @@ public class Constants {
 	public static final Color REGULAR_FRUIT_COLOR = new Color(255,0,0); // placeholder value
 	public static final Color LINEAR_FRUIT_COLOR = new Color(0,255,0); // placeholder value
 	public static final Color RANDOM_FRUIT_COLOR = new Color(0,0,255); // placeholder value
+	public static final int FRUIT_SPAWN_RATE = 5;
+	public static final int MAX_FRUITS = 4;
+	public static final int LINEAR_FRUIT_SPAWN_TIME = 15;
+	public static final int RANDOM_FRUIT_SPAWN_TIME = 30;
 
-	// Start//
+	//Start//
 	public static final int REFRESH_RATE = 20;
 	public static final int WINDOW_WIDTH = 1000;
 	public static final int WINDOW_HEIGHT = 480;

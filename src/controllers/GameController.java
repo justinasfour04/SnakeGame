@@ -1,215 +1,127 @@
 package controllers;
 
-import java.awt.Graphics;
-import java.awt.Image;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.Timer;
-import java.util.TimerTask;
-
-
 import snake.Snake;
 import utility.Constants;
 import utility.Constants.Direction;
-import window.MainGame;
+import window.FruitGroupView;
+import window.FruitView;
+import window.SnakeView;
 import fruit.Fruit;
-import fruit.LinearFruit;
-import fruit.RandomFruit;
 import fruit.FruitGenerator;
-
+/**
+ * 	Controller for Snake game.
+ *	Keeps track of important elements.
+ *	Uses Singleton principle
+ * @author Justin, Justin
+ * 
+ *	
+ */
 public class GameController{
 
-
-	private static final long serialVersionUID = 7337231778649216423L;
-	private int score; 
-	private boolean isEaten;
-	//private Fruit fruit;
-	private FruitGenerator fruitGen;
+	private FruitGenerator fruitGenerator;
 	private Snake snake;
-	private Image image;
-	private Graphics second;
-	private static GameController gameController = null;
-	private boolean isPaused;
-	private int gameTime;
-	private Timer gameTimer;
+	private static GameController gameController = null;	
+	private boolean isStarted;
+	private int score; 
 	
-//	protected GameController(Snake snake, Fruit fruit) {
-//		score = 0;
-//		isEaten = false;
-//		this.isPaused = false;
-//		this.snake = snake;
-//		this.fruit = fruit;
-//		this.gameTime = 0;
-//		gameTimer = new Timer();
-//		gameTimer.schedule(new TimerTask() { 
-//		   @Override  
-//		   public void run() {
-//		       if(!isPaused){
-//		    	   gameTime++;
-//		       }
-//		   }
-//		},  1000);
-//	}
-	
-	protected GameController(Snake snake, FruitGenerator fruitGen) {
+	/**
+	 * Constructor
+	 * @param Snake snake
+	 * @param FruitGenerator fruitGenerator
+	 */
+	private GameController(Snake snake, FruitGenerator fruitGenerator) {
 		score = 0;
-		isEaten = false;
-		this.isPaused = false;
 		this.snake = snake;
-		this.fruitGen = fruitGen;
-		this.gameTime = 0;
-		gameTimer = new Timer();
-		gameTimer.schedule(new TimerTask() { 
-		   @Override  
-		   public void run() {
-		       if(!isPaused){
-		    	   gameTime++;
-		       }
-		   }
-		},  1000);
+		this.fruitGenerator = fruitGenerator;
+		this.isStarted = false;
 	}
-
+	
+	/**
+	 * Returns the GameController.
+	 * Should only be used after the controller has been created
+	 * @return GameController gameController
+	 */
 	public static synchronized GameController getUniqueInstance() {
 		return gameController;
 	}
-
-//	public static synchronized GameController getUniqueInstance(Snake snake, Fruit fruit) {
-//		if (gameController == null)
-//			gameController = new GameController(snake, fruit);
-//		return gameController;
-//	}
 	
-	public static synchronized GameController getUniqueInstance(Snake snake, FruitGenerator fruitGen) {
+	/**
+	 * Returns the GameController or creates a new instance if need be
+	 * @param Snake snake
+	 * @param FruitGenerator fruitGenerator
+	 * @return GameController gameController
+	 */
+	public static synchronized GameController getUniqueInstance(Snake snake, FruitGenerator fruitGenerator) {
 		if (gameController == null)
-			gameController = new GameController(snake, fruitGen);
+			gameController = new GameController(snake, fruitGenerator);
 		return gameController;
 	}
-
-	public boolean checkCollision(Fruit fruit) {
-		if (snake.intersects(fruit))
-			return true;
-		return false;
-	}
-
-
-	public void incrementScore() {
-		if (isEaten)
-			setScore(getScore() + 1);
-	}
-
-
+	/**
+	 * Returns current score
+	 * @return int score
+	 */
 	public int getScore() {
 		return score;
 	}
-
-
-	public void setScore(int score) {
-		this.score = score;
-	}
-
-//	public void setGameBoundaries(Snake snake, Fruit fruit) {
-//		
-//		if (snake.getSnakeX() <= Constants.MIN_BOUNDARY_X) {
-//			snake.setSnakeX(Constants.MIN_BOUNDARY_X + Constants.SNAKE_SIZE);
-//		} else if (snake.getSnakeY() <= Constants.MIN_BOUNDARY_Y) {
-//			snake.setSnakeY(Constants.MIN_BOUNDARY_Y + Constants.SNAKE_SIZE);
-//		} else if (snake.getSnakeX() >= Constants.MAX_BOUNDARY_X) {
-//			snake.setSnakeX(Constants.MAX_BOUNDARY_X - Constants.SNAKE_SIZE);
-//		} else if (snake.getSnakeY() >= Constants.MAX_BOUNDARY_Y) {
-//			snake.setSnakeY(Constants.MAX_BOUNDARY_Y - Constants.SNAKE_SIZE);
-//		} else if (snake.getSnakeX() <= Constants.MIN_BOUNDARY_X && snake.getSnakeY() <= Constants.MIN_BOUNDARY_Y) {
-//			snake.setSnakeX(Constants.MIN_BOUNDARY_X + 1);
-//			snake.setSnakeY(Constants.MIN_BOUNDARY_Y + 1);
-//		} else if (snake.getSnakeX() <= Constants.MIN_BOUNDARY_X && snake.getSnakeY() >= Constants.MAX_BOUNDARY_Y) {
-//			snake.setSnakeX(Constants.MIN_BOUNDARY_X + 1);
-//			snake.setSnakeY(Constants.MAX_BOUNDARY_Y - 1);
-//		} else if (snake.getSnakeX() >= Constants.MAX_BOUNDARY_X && snake.getSnakeY() >= Constants.MAX_BOUNDARY_Y) {
-//			snake.setSnakeX(Constants.MAX_BOUNDARY_X - 1);
-//			snake.setSnakeY(Constants.MAX_BOUNDARY_Y - 1);
-//		} else if (snake.getSnakeX() >= Constants.MAX_BOUNDARY_X && snake.getSnakeY() <= Constants.MIN_BOUNDARY_Y) {
-//			snake.setSnakeX(Constants.MAX_BOUNDARY_X - 1);
-//			snake.setSnakeY(Constants.MIN_BOUNDARY_Y + 1);
-//		}
-//		
-//		if (fruit.getFruitX() <= Constants.MIN_BOUNDARY_X) {
-//			fruit.setFruitX(Constants.MIN_BOUNDARY_X + Constants.FRUIT_SIZE);
-//			switch(fruit.getDirection()){
-//			case WEST: 
-//				fruit.setDirection(Direction.EAST);
-//				break;
-//			case NORTHWEST:
-//				fruit.setDirection(Direction.NORTHEAST);
-//				break;
-//			case SOUTHWEST:
-//				fruit.setDirection(Direction.SOUTHEAST);
-//				break;
-//			}
-//			
-//		} else if (fruit.getFruitY() <= Constants.MIN_BOUNDARY_Y) {
-//			fruit.setFruitY(Constants.MIN_BOUNDARY_Y + Constants.FRUIT_SIZE);
-//			switch(fruit.getDirection()){
-//			case SOUTH: 
-//				fruit.setDirection(Direction.NORTH);
-//				break;
-//			case SOUTHWEST:
-//				fruit.setDirection(Direction.NORTHWEST);
-//				break;
-//			case SOUTHEAST:
-//				fruit.setDirection(Direction.NORTHEAST);
-//				break;
-//			}
-//		} else if (fruit.getFruitX() >= Constants.MAX_BOUNDARY_X) {
-//			fruit.setFruitX(Constants.MAX_BOUNDARY_X - Constants.FRUIT_SIZE);
-//			switch(fruit.getDirection()){
-//			case EAST: 
-//				fruit.setDirection(Direction.WEST);
-//				break;
-//			case NORTHEAST:
-//				fruit.setDirection(Direction.SOUTHEAST);
-//				break;
-//			case SOUTHEAST:
-//				fruit.setDirection(Direction.SOUTHWEST);
-//				break;
-//			}
-//		} else if (fruit.getFruitY() >= Constants.MAX_BOUNDARY_Y) {
-//			fruit.setFruitY(Constants.MAX_BOUNDARY_Y - Constants.FRUIT_SIZE);
-//			switch(fruit.getDirection()){
-//			case NORTH: 
-//				fruit.setDirection(Direction.SOUTH);
-//				break;
-//			case NORTHWEST:
-//				fruit.setDirection(Direction.SOUTHWEST);
-//				break;
-//			case NORTHEAST:
-//				fruit.setDirection(Direction.SOUTHEAST);
-//				break;
-//			}
-//		} 
-//			else if (fruit.getFruitX() <= Constants.MIN_BOUNDARY_X && fruit.getFruitY() <= Constants.MIN_BOUNDARY_Y) {
-//			fruit.setFruitX(Constants.MIN_BOUNDARY_X + 1);
-//			fruit.setFruitY(Constants.MIN_BOUNDARY_Y + 1);
-//			fruit.setDirection(Direction.NORTHEAST);
-//		} else if (fruit.getFruitX() <= Constants.MIN_BOUNDARY_X && fruit.getFruitY() >= Constants.MAX_BOUNDARY_Y) {
-//			fruit.setFruitX(Constants.MIN_BOUNDARY_X + 1);
-//			fruit.setFruitY(Constants.MAX_BOUNDARY_Y - 1);
-//			fruit.setDirection(Direction.SOUTHEAST);
-//		} else if (fruit.getFruitX() >= Constants.MAX_BOUNDARY_X && fruit.getFruitY() >= Constants.MAX_BOUNDARY_Y) {
-//			fruit.setFruitX(Constants.MAX_BOUNDARY_X - 1);
-//			fruit.setFruitY(Constants.MAX_BOUNDARY_Y - 1);
-//			fruit.setDirection(Direction.SOUTHWEST);
-//		} else if (fruit.getFruitX() >= Constants.MAX_BOUNDARY_X && fruit.getFruitY() <= Constants.MIN_BOUNDARY_Y) {
-//			fruit.setFruitX(Constants.MAX_BOUNDARY_X - 1);
-//			fruit.setFruitY(Constants.MIN_BOUNDARY_Y + 1);
-//			fruit.setDirection(Direction.NORTHWEST);
-//		}
-//		
-//	}
 	
-public void setGameBoundaries(Snake snake, FruitGenerator fruitGen) {
+	/**
+	 * Returns true if game has been started
+	 * @return boolean isStarted
+	 */
+	public boolean isStarted(){
+		return this.isStarted;
+	}
+	
+	/**
+	 * Sets isStarted to true
+	 */
+	public void setIsStarted(){
+		this.isStarted = true;
+	}
+	
+	/**
+	 * Checks for collision between the snake,fruit, and walls
+	 * @param snake
+	 * @param fruitGen
+	 * @param snakeView
+	 * @param fruitGroupView
+	 */
+	public void applyRules(Snake snake, FruitGenerator fruitGen, SnakeView snakeView, FruitGroupView fruitGroupView){
+
+		checkFruitCollision(snakeView, fruitGroupView);
+		setGameBoundaries(snake, fruitGen);
 		
+	}
+	
+	/**
+	 * Checks for collision between the snake and fruits
+	 * @param snakeView
+	 * @param fruitGroupView
+	 */
+	private void checkFruitCollision(SnakeView snakeView, FruitGroupView fruitGroupView) {
+		
+		for(int i = 0; i < fruitGroupView.getFruitViews().size(); i++){ 
+			FruitView fruitView = fruitGroupView.getFruitViews().get(i); //get the fruit display rectangle of each existing fruit
+			if (snakeView.getSnakeView().intersects(fruitView.getFruitDisplay())){ //check to see if the snake display rectangle intersects the fruits'
+				if(!fruitView.getFruit().isEaten()){
+					fruitView.getFruit().setEaten(true);
+					this.score++;
+					fruitGenerator.removeFruit(fruitView.getFruit());//remove the fruit from the list of fruits in game, as well as the display
+					fruitGroupView.getFruitViews().remove(fruitView);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Checks to make sure neither snake nor fruits go through walls.
+	 * Bounces fruits if applicable
+	 * @param snake
+	 * @param fruitGen
+	 */
+	private void setGameBoundaries(Snake snake, FruitGenerator fruitGen) {
+		
+		//make sure snake doesn't go through the walls
 		if (snake.getSnakeX() <= Constants.MIN_BOUNDARY_X) {
 			snake.setSnakeX(Constants.MIN_BOUNDARY_X + Constants.SNAKE_SIZE);
 		} else if (snake.getSnakeY() <= Constants.MIN_BOUNDARY_Y) {
@@ -218,21 +130,10 @@ public void setGameBoundaries(Snake snake, FruitGenerator fruitGen) {
 			snake.setSnakeX(Constants.MAX_BOUNDARY_X - Constants.SNAKE_SIZE);
 		} else if (snake.getSnakeY() >= Constants.MAX_BOUNDARY_Y) {
 			snake.setSnakeY(Constants.MAX_BOUNDARY_Y - Constants.SNAKE_SIZE);
-		} else if (snake.getSnakeX() <= Constants.MIN_BOUNDARY_X && snake.getSnakeY() <= Constants.MIN_BOUNDARY_Y) {
-			snake.setSnakeX(Constants.MIN_BOUNDARY_X + 1);
-			snake.setSnakeY(Constants.MIN_BOUNDARY_Y + 1);
-		} else if (snake.getSnakeX() <= Constants.MIN_BOUNDARY_X && snake.getSnakeY() >= Constants.MAX_BOUNDARY_Y) {
-			snake.setSnakeX(Constants.MIN_BOUNDARY_X + 1);
-			snake.setSnakeY(Constants.MAX_BOUNDARY_Y - 1);
-		} else if (snake.getSnakeX() >= Constants.MAX_BOUNDARY_X && snake.getSnakeY() >= Constants.MAX_BOUNDARY_Y) {
-			snake.setSnakeX(Constants.MAX_BOUNDARY_X - 1);
-			snake.setSnakeY(Constants.MAX_BOUNDARY_Y - 1);
-		} else if (snake.getSnakeX() >= Constants.MAX_BOUNDARY_X && snake.getSnakeY() <= Constants.MIN_BOUNDARY_Y) {
-			snake.setSnakeX(Constants.MAX_BOUNDARY_X - 1);
-			snake.setSnakeY(Constants.MIN_BOUNDARY_Y + 1);
 		}
-		for(Fruit f : fruitGen.getGroup()){
-			if (f.getFruitX() <= Constants.MIN_BOUNDARY_X) {
+		//make sure fruit bounces off walls
+		for(Fruit f : fruitGen.getFruitList()){
+			if (f.getFruitX() <= Constants.MIN_BOUNDARY_X) { //fruit hitting left side of window
 				f.setFruitX(Constants.MIN_BOUNDARY_X + Constants.FRUIT_SIZE);
 				switch(f.getDirection()){
 				case WEST: 
@@ -248,8 +149,7 @@ public void setGameBoundaries(Snake snake, FruitGenerator fruitGen) {
 					f.setDirection(Direction.EAST);
 					break;
 				}
-				
-			} else if (f.getFruitY() <= Constants.MIN_BOUNDARY_Y) {
+			} else if (f.getFruitY() <= Constants.MIN_BOUNDARY_Y) {//fruit hitting bottom of window
 				f.setFruitY(Constants.MIN_BOUNDARY_Y + Constants.FRUIT_SIZE);
 				switch(f.getDirection()){
 				case SOUTH: 
@@ -264,8 +164,8 @@ public void setGameBoundaries(Snake snake, FruitGenerator fruitGen) {
 				default:
 					f.setDirection(Direction.NORTH);
 					break;
-				}
-			} else if (f.getFruitX() >= Constants.MAX_BOUNDARY_X) {
+				} 
+			} else if (f.getFruitX() >= Constants.MAX_BOUNDARY_X) { //fruit hitting right side of window
 				f.setFruitX(Constants.MAX_BOUNDARY_X - Constants.FRUIT_SIZE);
 				switch(f.getDirection()){
 				case EAST: 
@@ -280,8 +180,9 @@ public void setGameBoundaries(Snake snake, FruitGenerator fruitGen) {
 				default:
 					f.setDirection(Direction.WEST);
 					break;
-				}
-			} else if (f.getFruitY() >= Constants.MAX_BOUNDARY_Y) {
+				} 
+			} else if (f.getFruitY() >= Constants.MAX_BOUNDARY_Y) { // fruit hitting top of window
+				
 				f.setFruitY(Constants.MAX_BOUNDARY_Y - Constants.FRUIT_SIZE);
 				switch(f.getDirection()){
 				case NORTH: 
@@ -297,20 +198,20 @@ public void setGameBoundaries(Snake snake, FruitGenerator fruitGen) {
 					f.setDirection(Direction.SOUTH);
 					break;
 				}
-			} 
-				else if (f.getFruitX() <= Constants.MIN_BOUNDARY_X && f.getFruitY() <= Constants.MIN_BOUNDARY_Y) {
+			} 	
+			else if (f.getFruitX() <= Constants.MIN_BOUNDARY_X && f.getFruitY() <= Constants.MIN_BOUNDARY_Y) { //fruit hitting bottom left corner
 				f.setFruitX(Constants.MIN_BOUNDARY_X + 1);
 				f.setFruitY(Constants.MIN_BOUNDARY_Y + 1);
 				f.setDirection(Direction.NORTHEAST);
-			} else if (f.getFruitX() <= Constants.MIN_BOUNDARY_X && f.getFruitY() >= Constants.MAX_BOUNDARY_Y) {
+			} else if (f.getFruitX() <= Constants.MIN_BOUNDARY_X && f.getFruitY() >= Constants.MAX_BOUNDARY_Y) {//fruit hitting top left corner
 				f.setFruitX(Constants.MIN_BOUNDARY_X + 1);
 				f.setFruitY(Constants.MAX_BOUNDARY_Y - 1);
 				f.setDirection(Direction.SOUTHEAST);
-			} else if (f.getFruitX() >= Constants.MAX_BOUNDARY_X && f.getFruitY() >= Constants.MAX_BOUNDARY_Y) {
+			} else if (f.getFruitX() >= Constants.MAX_BOUNDARY_X && f.getFruitY() >= Constants.MAX_BOUNDARY_Y) { //fruit hitting top right corner
 				f.setFruitX(Constants.MAX_BOUNDARY_X - 1);
 				f.setFruitY(Constants.MAX_BOUNDARY_Y - 1);
 				f.setDirection(Direction.SOUTHWEST);
-			} else if (f.getFruitX() >= Constants.MAX_BOUNDARY_X && f.getFruitY() <= Constants.MIN_BOUNDARY_Y) {
+			} else if (f.getFruitX() >= Constants.MAX_BOUNDARY_X && f.getFruitY() <= Constants.MIN_BOUNDARY_Y) { //fruit hitting bottom right corner
 				f.setFruitX(Constants.MAX_BOUNDARY_X - 1);
 				f.setFruitY(Constants.MIN_BOUNDARY_Y + 1);
 				f.setDirection(Direction.NORTHWEST);
@@ -318,19 +219,11 @@ public void setGameBoundaries(Snake snake, FruitGenerator fruitGen) {
 		}
 	}
 	
-//	public void pause(){
-//		this.snake.pause();
-//		this.fruit.pause();
-//	}
-
+	/**
+	 * Pauses the game
+	 */
 	public void pause(){
 		this.snake.pause();
-		this.fruitGen.pause();
+		this.fruitGenerator.pause();
 	}
-
-	
-	public int getGameTime(){
-		return this.gameTime;
-	}
-
 }

@@ -1,93 +1,48 @@
 package fruit;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import snake.Snake;
+import utility.Constants;
 import controllers.GameController;
-
-public class FruitGenerator {//implements Runnable {
+/**
+ * Periodically generates different Fruits.
+ * Uses Singleton principle
+ * @author Justin
+ *
+ */
+public class FruitGenerator {
 	
-	private ArrayList<Fruit> group;
+	private ArrayList<Fruit> fruitList;
 	private static FruitGenerator fruitGenerator = null;
 	private GameController controller;
-	private Timer fruitTimer;
 	private Random r;
 	private long previousTime;
 	private long currentTime;
-	private int count;
+	private int spawnTimer;
 	private boolean dontSpawn;
 	private boolean isPaused;
 	
+	/**
+	 * Constructor for FruitGenerator
+	 */
 	private FruitGenerator(){
 		this.controller = GameController.getUniqueInstance(Snake.getUniqueInstance(),this);
-		this.group = new ArrayList<Fruit>();
-		group.add(new RegularFruit());
+		this.fruitList = new ArrayList<Fruit>();
+		fruitList.add(new RegularFruit());
 		r = new Random();
-		fruitTimer = new Timer();
 		this.previousTime = System.currentTimeMillis();
 		this.currentTime = System.currentTimeMillis();
-		this.count = 0;
+		this.spawnTimer = 0;
 		this.dontSpawn = false;
 		this.isPaused = false;
-//		Thread spawn = new Thread(new Runnable() {
-//		    public void run()
-//		    {
-//		        try {
-//					Thread.sleep(5000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//		        if(controller.getGameTime() < 15){
-//			    	   group.add(new RegularFruit());
-//			       }
-//			       else if( controller.getGameTime() >= 15 && controller.getGameTime() < 30){
-//			    	   int fruitID = r.nextInt(2);
-//			    	   switch(fruitID){
-//			    	   case 0:
-//			    		   group.add(new RegularFruit());
-//			    		   break;
-//			    	   case 1:
-//			    		   group.add(new LinearFruit());
-//			    		   break;
-//			    	   }
-//			       } else {
-//			    	   int fruitID = r.nextInt(3);
-//			    	   switch(fruitID){
-//			    	   case 0:
-//			    		   group.add(new RegularFruit());
-//			    		   break;
-//			    	   case 1:
-//			    		   group.add(new LinearFruit());
-//			    		   break;
-//			    	   case 2:
-//			    		   group.add(new RandomFruit());
-//			    	   }
-//			       }
-//			   }
-//		});
-//		spawn.start();
-//		
-//		Thread remove = new Thread(new Runnable() {
-//		    public void run()
-//		    {
-//		        try {
-//					Thread.sleep(10000);
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//		        group.remove(0); 
-//		    }
-//		});
-//		remove.start();
-//		
 	}
 	
+	/**
+	 * Returns the FruitGenerator
+	 * @return FruitGenerator
+	 */
 	public static synchronized FruitGenerator getUniqueInstance(){
 		if(fruitGenerator == null){
 			fruitGenerator = new FruitGenerator();
@@ -97,128 +52,112 @@ public class FruitGenerator {//implements Runnable {
 		}
 	}
 	
+	/**
+	 * Updates the fruits in game, and spawns/removes fruits when necessary
+	 */
 	public void update(){
-//		System.out.println(count);
-//		System.out.println(currentTime);
-//		System.out.println(previousTime);
-//		System.out.println(currentTime-previousTime);
-		if(!isPaused){
-			updateTime();
 		
-			if(count%5 == 0 && count != 0){
+		if(!isPaused && controller.isStarted()){
+			updateTime();
+			if(spawnTimer%Constants.FRUIT_SPAWN_RATE == 0 && spawnTimer != 0){ //spawn fruits periodically
 				if(!dontSpawn){
 					spawn();
+					if(fruitList.size() > Constants.MAX_FRUITS){
+						removeOldestFruit();
+					}
 				}
-				this.dontSpawn = true;
-				
-			}
-			if(count%9 ==0 && count != 0){
-				remove();
-				count++;
+				this.dontSpawn = true;	//Stop from spawning again while the count is still the same
 			}
 		}
-		for(Fruit fruit : group){
+		for(Fruit fruit : fruitList){
 			fruit.update();
 		}
-		
 	}
 	
+	/**
+	 * Keeps track of time, counting seconds
+	 */
 	private void updateTime(){
 		currentTime = System.currentTimeMillis();
 		if(currentTime-previousTime >= 1000){
-			count++;
+			spawnTimer++;
 			previousTime = currentTime;
 			dontSpawn = false;
 		}
 	}
 	
+	/**
+	 * Adds Fruits to the list of fruits in game
+	 * @param fruit
+	 */
 	public void addFruit(Fruit fruit){
-		this.group.add(fruit);		
+		this.fruitList.add(fruit);		
 	}
 	
-	public ArrayList<Fruit> getGroup(){
-		return this.group;
+	/**
+	 * Returns the list of fruits is game
+	 * @return group
+	 */
+	public ArrayList<Fruit> getFruitList(){
+		return this.fruitList;
 	}
 	
+	/**
+	 * Pauses all fruits in game
+	 */
 	public void pause(){
 		this.isPaused = !isPaused;
-		for(Fruit fruit : group){
+		for(Fruit fruit : fruitList){
 			fruit.pause();
 		}
 	}
 	
+	/**
+	 * Spawns different fruits depending on time
+	 */
 	private void spawn(){
-		if(count < 15){
-	    	   group.add(new RegularFruit());
-	       }
-	       else if( count >= 15 && count < 30){
-	    	   int fruitID = r.nextInt(2);
-	    	   switch(fruitID){
+		
+		if(spawnTimer < Constants.LINEAR_FRUIT_SPAWN_TIME){ //only spawn regular fruits
+			fruitList.add(new RegularFruit());
+		} else if( spawnTimer >= Constants.LINEAR_FRUIT_SPAWN_TIME && spawnTimer < Constants.RANDOM_FRUIT_SPAWN_TIME){ //spawn regular or linear fruits
+			int fruitID = r.nextInt(2);  //randomly choose which kind of fruit to spawn
+			switch(fruitID){
 	    	   case 0:
-	    		   group.add(new RegularFruit());
+	    		   fruitList.add(new RegularFruit());
 	    		   break;
 	    	   case 1:
-	    		   group.add(new LinearFruit());
+	    		   fruitList.add(new LinearFruit());
 	    		   break;
 	    	   }
-	       } else {
-	    	   int fruitID = r.nextInt(3);
+	    } else {	//spawn any of the three fruits
+	    	   		
+	    	   int fruitID = r.nextInt(3); //randomly choose which kind of fruit to spawn
 	    	   switch(fruitID){
 	    	   case 0:
-	    		   group.add(new RegularFruit());
+	    		   fruitList.add(new RegularFruit());
 	    		   break;
 	    	   case 1:
-	    		   group.add(new LinearFruit());
+	    		   fruitList.add(new LinearFruit());
 	    		   break;
 	    	   case 2:
-	    		   group.add(new RandomFruit());
+	    		   fruitList.add(new RandomFruit());
 	    	   }
 	       }
 	}
 	
-	private void remove(){
-		group.remove(0);
+	/**
+	 * Removes the oldest fruit in the game
+	 */
+	private void removeOldestFruit(){
+		fruitList.remove(0);
 	}
-//	@Override
-//	public void run() {
-//		fruitTimer.schedule(new TimerTask() { 
-//			   @Override  
-//			   public void run() {
-//			       if(controller.getGameTime() < 15){
-//			    	   group.add(new RegularFruit());
-//			       }
-//			       else if( controller.getGameTime() >= 15 && controller.getGameTime() < 30){
-//			    	   int fruitID = r.nextInt(2);
-//			    	   switch(fruitID){
-//			    	   case 0:
-//			    		   group.add(new RegularFruit());
-//			    		   break;
-//			    	   case 1:
-//			    		   group.add(new LinearFruit());
-//			    		   break;
-//			    	   }
-//			       } else {
-//			    	   int fruitID = r.nextInt(3);
-//			    	   switch(fruitID){
-//			    	   case 0:
-//			    		   group.add(new RegularFruit());
-//			    		   break;
-//			    	   case 1:
-//			    		   group.add(new LinearFruit());
-//			    		   break;
-//			    	   case 2:
-//			    		   group.add(new RandomFruit());
-//			    	   }
-//			       }
-//			   }
-//			},  5000);
-//			
-//			fruitTimer.schedule(new TimerTask() { 
-//				   @Override  
-//				   public void run() {
-//				       group.remove(0); 
-//				   }
-//				},  10000);
-//		
-//	}
+	
+	/**
+	 * Removes a specific fruit from the game
+	 * @param fruit
+	 */
+	public void removeFruit(Fruit fruit){
+		int index = fruitList.indexOf(fruit);
+		fruitList.remove(index);
+	}
 }

@@ -1,27 +1,34 @@
 package fruit;
 
-import java.awt.Color;
 import java.util.Random;
 
 import utility.Constants;
 import utility.Constants.Direction;
 
+/**
+ * A Fruit that can move in 2 dimensions 
+ * @author Justin
+ *
+ */
 public class RandomFruit extends Fruit{
 	
 	private int speed;
 	private boolean isPaused;
 	private Direction currentDirection;
-	
+	/**
+	 * Creates a new RandomFruit
+	 */
 	public RandomFruit(){
 		super();
-		Random r = new Random();
+		
 		this.value = Constants.RANDOM_FRUIT_VALUE;
 		this.currentSpeed = Constants.RANDOM_FRUIT_SPEED;
 		this.defaultSpeed = Constants.RANDOM_FRUIT_SPEED;
 		this.color = Constants.RANDOM_FRUIT_COLOR;
 		this.isPaused = false;
-		int directionID = r.nextInt(8);
 		
+		Random r = new Random();
+		int directionID = r.nextInt(8); //randomly choose a starting direction
 		switch (directionID) {
 		case 0:
 			this.currentDirection = Direction.NORTH;		
@@ -54,15 +61,6 @@ public class RandomFruit extends Fruit{
 	public int getSpeed() {
 		return speed;
 	}
-	
-	public void pause(){
-		if(!isPaused){
-			this.speed = Constants.PAUSE;
-		} else{
-			this.speed = Constants.RANDOM_FRUIT_SPEED;
-		}
-		this.isPaused = !this.isPaused;
-	}
 
 	@Override
 	public void update() {
@@ -75,13 +73,17 @@ public class RandomFruit extends Fruit{
 		
 	}
 	
+	/**
+	 * Moves the fruit depending on its direction
+	 * @param direction
+	 */
 	private void move(Direction direction) {
 		switch (direction) {
 		case NORTH:
-			this.fruitYPos -= currentSpeed;		
+			this.fruitYPos += currentSpeed;		
 			break;
 		case SOUTH:
-			this.fruitYPos += currentSpeed;
+			this.fruitYPos -= currentSpeed;
 			break;
 		case EAST:
 			this.fruitXPos += currentSpeed;
@@ -104,6 +106,10 @@ public class RandomFruit extends Fruit{
 		case SOUTHWEST:
 			this.fruitXPos -= currentSpeed;
 			this.fruitYPos -= currentSpeed;
+			break;
+		case NONE:
+			break;
+		default:
 			break;		
 		}
 	}

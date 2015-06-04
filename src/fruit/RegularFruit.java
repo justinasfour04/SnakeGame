@@ -1,9 +1,12 @@
 package fruit;
 
-import java.awt.Color;
-
 import utility.Constants;
 import utility.Constants.Direction;
+/**
+ * A regular non-moving Fruit
+ * @author Justin
+ *
+ */
 public class RegularFruit extends Fruit {
 
 	public RegularFruit(){

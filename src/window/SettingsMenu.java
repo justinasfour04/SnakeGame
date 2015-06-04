@@ -1,7 +1,6 @@
 package window;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class SettingsMenu extends JPanel{
@@ -18,9 +17,8 @@ public class SettingsMenu extends JPanel{
 	}
 
 	private void buildSettingsMenu() {
-		JLabel test = new JLabel("HELOO");
-		add(new JButton("Heloo"));
-		
+		//JLabel test = new JLabel("HELOO");
+		add(new JButton("Back"));
 		setVisible(true);
 	}
 
