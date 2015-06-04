@@ -27,6 +27,8 @@ public class MainGame extends JPanel{
 	private static final int VERTICAL_GAP = 120;
 	private GameController controller;
 	private static MainGame mainGame = null;
+	
+	public JPanel getGamePanel() { return gamePanel; }
 
 	private MainGame() {
 		controller = GameController.getUniqueInstance();
@@ -72,4 +74,5 @@ public class MainGame extends JPanel{
 		add(gamePanel, BorderLayout.WEST);
 		setVisible(true);
 	}
+	
 }

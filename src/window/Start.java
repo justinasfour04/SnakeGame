@@ -114,7 +114,7 @@ public class Start extends Applet implements Runnable, KeyListener {
 			if(inGame){
 				snakeView.update();
 				fruitView.update();
-				controller.setGameBoundaries(snake);
+				controller.setGameBoundaries();
 			}
 			try {
 				Thread.sleep(Constants.REFRESH_RATE);
