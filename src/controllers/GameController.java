@@ -12,7 +12,7 @@ import utility.Constants;
 import utility.Constants.Direction;
 import fruit.Fruit;
 
-public class GameController {
+public class GameController{
 
 	
 	private static final long serialVersionUID = 7337231778649216423L;
@@ -65,9 +65,8 @@ public class GameController {
 		this.score = score;
 	}
 
-	public void setGameBoundaries(Snake snake) {
-		// need to fix boundary conditions for better collision detection later
-		// the corners of the screen don't stop snake from going out of screen
+	public void setGameBoundaries(Snake snake, Fruit fruit) {
+		
 		if (snake.getSnakeX() <= Constants.MIN_BOUNDARY_X) {
 			snake.setSnakeX(Constants.MIN_BOUNDARY_X + Constants.SNAKE_SIZE);
 		} else if (snake.getSnakeY() <= Constants.MIN_BOUNDARY_Y) {
@@ -89,6 +88,79 @@ public class GameController {
 			snake.setSnakeX(Constants.MAX_BOUNDARY_X - 1);
 			snake.setSnakeY(Constants.MIN_BOUNDARY_Y + 1);
 		}
+		
+		if (fruit.getFruitX() <= Constants.MIN_BOUNDARY_X) {
+			fruit.setFruitX(Constants.MIN_BOUNDARY_X + Constants.FRUIT_SIZE);
+			switch(fruit.getDirection()){
+			case WEST: 
+				fruit.setDirection(Direction.EAST);
+				break;
+			case NORTHWEST:
+				fruit.setDirection(Direction.NORTHEAST);
+				break;
+			case SOUTHWEST:
+				fruit.setDirection(Direction.SOUTHEAST);
+				break;
+			}
+			
+		} else if (fruit.getFruitY() <= Constants.MIN_BOUNDARY_Y) {
+			fruit.setFruitY(Constants.MIN_BOUNDARY_Y + Constants.FRUIT_SIZE);
+			switch(fruit.getDirection()){
+			case SOUTH: 
+				fruit.setDirection(Direction.NORTH);
+				break;
+			case SOUTHWEST:
+				fruit.setDirection(Direction.NORTHWEST);
+				break;
+			case SOUTHEAST:
+				fruit.setDirection(Direction.NORTHEAST);
+				break;
+			}
+		} else if (fruit.getFruitX() >= Constants.MAX_BOUNDARY_X) {
+			fruit.setFruitX(Constants.MAX_BOUNDARY_X - Constants.FRUIT_SIZE);
+			switch(fruit.getDirection()){
+			case EAST: 
+				fruit.setDirection(Direction.WEST);
+				break;
+			case NORTHEAST:
+				fruit.setDirection(Direction.SOUTHEAST);
+				break;
+			case SOUTHEAST:
+				fruit.setDirection(Direction.SOUTHWEST);
+				break;
+			}
+		} else if (fruit.getFruitY() >= Constants.MAX_BOUNDARY_Y) {
+			fruit.setFruitY(Constants.MAX_BOUNDARY_Y - Constants.FRUIT_SIZE);
+			switch(fruit.getDirection()){
+			case NORTH: 
+				fruit.setDirection(Direction.SOUTH);
+				break;
+			case NORTHWEST:
+				fruit.setDirection(Direction.SOUTHWEST);
+				break;
+			case NORTHEAST:
+				fruit.setDirection(Direction.SOUTHEAST);
+				break;
+			}
+		} 
+			else if (fruit.getFruitX() <= Constants.MIN_BOUNDARY_X && fruit.getFruitY() <= Constants.MIN_BOUNDARY_Y) {
+			fruit.setFruitX(Constants.MIN_BOUNDARY_X + 1);
+			fruit.setFruitY(Constants.MIN_BOUNDARY_Y + 1);
+			fruit.setDirection(Direction.NORTHEAST);
+		} else if (fruit.getFruitX() <= Constants.MIN_BOUNDARY_X && fruit.getFruitY() >= Constants.MAX_BOUNDARY_Y) {
+			fruit.setFruitX(Constants.MIN_BOUNDARY_X + 1);
+			fruit.setFruitY(Constants.MAX_BOUNDARY_Y - 1);
+			fruit.setDirection(Direction.SOUTHEAST);
+		} else if (fruit.getFruitX() >= Constants.MAX_BOUNDARY_X && fruit.getFruitY() >= Constants.MAX_BOUNDARY_Y) {
+			fruit.setFruitX(Constants.MAX_BOUNDARY_X - 1);
+			fruit.setFruitY(Constants.MAX_BOUNDARY_Y - 1);
+			fruit.setDirection(Direction.SOUTHWEST);
+		} else if (fruit.getFruitX() >= Constants.MAX_BOUNDARY_X && fruit.getFruitY() <= Constants.MIN_BOUNDARY_Y) {
+			fruit.setFruitX(Constants.MAX_BOUNDARY_X - 1);
+			fruit.setFruitY(Constants.MIN_BOUNDARY_Y + 1);
+			fruit.setDirection(Direction.NORTHWEST);
+		}
+		
 	}
 	
 	public void pause(){

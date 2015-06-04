@@ -52,7 +52,9 @@ public class Start extends Applet implements Runnable, KeyListener {
 		
 		this.inGame = false;
 		
-		fruit = new RegularFruit();
+		//fruit = new RegularFruit();
+		//fruit = new LinearFruit();
+		fruit = new RandomFruit();
 		snake = Snake.getUniqueInstance();
 		controller = GameController.getUniqueInstance(snake, fruit);
 		
@@ -109,12 +111,12 @@ public class Start extends Applet implements Runnable, KeyListener {
 		while (true) {
 
 			this.repaint();
-			// fruit.update();
+			fruit.update();
 			snake.update();
 			if(inGame){
 				snakeView.update();
 				fruitView.update();
-				controller.setGameBoundaries(snake);
+				controller.setGameBoundaries(snake, fruit);
 			}
 			try {
 				Thread.sleep(Constants.REFRESH_RATE);
@@ -166,14 +168,14 @@ public class Start extends Applet implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_UP && (snake.getDirection() != Direction.DOWN || snake.getDirection() == null)) {
-			snake.setDirection(Direction.UP);
-		} else if (key == KeyEvent.VK_DOWN && (snake.getDirection() != Direction.UP || snake.getDirection() == null)) {
-			snake.setDirection(Direction.DOWN);
-		} else if (key == KeyEvent.VK_RIGHT && (snake.getDirection() != Direction.LEFT || snake.getDirection() == null)) {
-			snake.setDirection(Direction.RIGHT);
-		} else if (key == KeyEvent.VK_LEFT && (snake.getDirection() != Direction.RIGHT || snake.getDirection() == null)) {
-			snake.setDirection(Direction.LEFT);
+		if (key == KeyEvent.VK_UP && (snake.getDirection() != Direction.SOUTH || snake.getDirection() == null)) {
+			snake.setDirection(Direction.NORTH);
+		} else if (key == KeyEvent.VK_DOWN && (snake.getDirection() != Direction.NORTH || snake.getDirection() == null)) {
+			snake.setDirection(Direction.SOUTH);
+		} else if (key == KeyEvent.VK_RIGHT && (snake.getDirection() != Direction.WEST || snake.getDirection() == null)) {
+			snake.setDirection(Direction.EAST);
+		} else if (key == KeyEvent.VK_LEFT && (snake.getDirection() != Direction.EAST || snake.getDirection() == null)) {
+			snake.setDirection(Direction.WEST);
 		}
 //		System.out.println("From Start");
 	}
