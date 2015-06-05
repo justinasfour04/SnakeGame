@@ -33,9 +33,15 @@ public class FruitView {
 	public void draw(Graphics g){
 		if(!fruit.isEaten()){
 			g.setColor(fruit.getColor());
-			g.fillRect(fruit.getFruitX(), fruit.getFruitY(), fruitDisplay.width, fruitDisplay.height);
+			//g.fillRect(fruit.getFruitX(), fruit.getFruitY(), fruitDisplay.width, fruitDisplay.height);
+			g.fillRect(fruitDisplay.x, fruitDisplay.y, fruitDisplay.width, fruitDisplay.height);
 		}
 		
+	}
+	
+	public void update(){
+		this.fruitDisplay = new Rectangle(fruit.getFruitX(),fruit.getFruitY(), 
+				Constants.FRUIT_SIZE, Constants.FRUIT_SIZE);
 	}
 	
 	/**

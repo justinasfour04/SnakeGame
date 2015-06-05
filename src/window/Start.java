@@ -107,7 +107,8 @@ public class Start extends Applet implements Runnable, KeyListener {
 			fruitGenerator.update();
 			snake.update();
 			if(controller.isStarted()){
-				snakeView.update();				
+				snakeView.update();
+				fruitGroupView.update();
 				controller.applyRules(snake, fruitGenerator, snakeView, fruitGroupView);
 			}
 			try {

@@ -37,6 +37,13 @@ public class FruitGroupView {
 		}
 	}
 	
+	public void update(){
+		for(int i = 0; i < fruitViews.size(); i++){
+			FruitView view = fruitViews.get(i);
+			view.update();
+		}
+	}
+	
 	/**
 	 * Returns a list of all the FruitViews
 	 * @return fruitViews
