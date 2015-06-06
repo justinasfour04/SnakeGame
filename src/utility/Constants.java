@@ -14,10 +14,10 @@ import javax.swing.ImageIcon;
 public class Constants {
 	
 	//Snake//
-	public static final int MIN_BOUNDARY_X = 0;
-	public static final int MIN_BOUNDARY_Y = 0;
+	public static final int MIN_BOUNDARY_X = 5;
+	public static final int MIN_BOUNDARY_Y = 40;
 	public static final int MAX_BOUNDARY_X = 790;
-	public static final int MAX_BOUNDARY_Y = 470;
+	public static final int MAX_BOUNDARY_Y = 560;
 	public static final int MOVE_SPEED = 3;
 	public static final int START_SPEED = 0;
 	public static final int SNAKE_SIZE = 10;
@@ -42,8 +42,8 @@ public class Constants {
 
 	//Start//
 	public static final int REFRESH_RATE = 20;
-	public static final int WINDOW_WIDTH = 1000;
-	public static final int WINDOW_HEIGHT = 480;
+	public static final int WINDOW_WIDTH = 1100;
+	public static final int WINDOW_HEIGHT = 580;
 	public static final Font BUTTON_FONT = new Font("Times New Roman", Font.BOLD, 40);
 	public static final Dimension BUTTON_SIZE = new Dimension(200, 100);
 	public static final Font TITLE_FONT = new Font("Times New Roman", Font.BOLD, 60);

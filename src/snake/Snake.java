@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import utility.Constants;
 import utility.Constants.Direction;
+import utility.GameActions;
 /**
  * The snake. 
  * Uses singleton principle
@@ -21,7 +22,7 @@ public class Snake {
 	private ArrayList<Rectangle> body;
 	private Direction snakeDirection;
 	private static Snake snake = null;
-	
+
 	/**
 	 * Contructs a new Snake
 	 */
@@ -34,7 +35,7 @@ public class Snake {
 		body.add(new Rectangle(snakeXPos, snakeYPos, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE));
 		this.isPaused = false;
 	}
-	
+
 	/**
 	 * Returns the snake
 	 * @return snake
@@ -58,17 +59,17 @@ public class Snake {
 			move(Direction.EAST);
 		else if (snakeDirection == Direction.WEST)
 			move(Direction.WEST);
-		
+
 		Iterator<Rectangle> bodyIterator = body.iterator();
 		while (bodyIterator.hasNext())
 			bodyIterator.next().setLocation(snakeXPos, snakeYPos);
 	}
-	
+
 	/**
 	 * moves the snake
 	 * @param direction
 	 */
-	private void move(Direction direction) {
+	public void move(Direction direction) {
 		switch (direction) {
 		case NORTH:
 			snakeYPos -= snakeSpeed;		
@@ -86,7 +87,7 @@ public class Snake {
 			break;
 		}
 	}
-	
+
 	/**
 	 * Returns the snake's x-coordinate
 	 * @return snakeXpos
@@ -94,7 +95,7 @@ public class Snake {
 	public int getSnakeX() {
 		return snakeXPos;
 	}
-	
+
 	/**
 	 * Returns the snake's y-coordinate
 	 * @return snakeYPos
@@ -102,7 +103,7 @@ public class Snake {
 	public int getSnakeY() {
 		return snakeYPos;
 	}
-	
+
 	/**
 	 * Returns the snake's speed
 	 * @return snakeSpeed
@@ -110,7 +111,7 @@ public class Snake {
 	public int getSpeed() {
 		return snakeSpeed;
 	}
-	
+
 	/**
 	 * Sets the snake's x-coordinate
 	 * @param snakeX
@@ -118,7 +119,7 @@ public class Snake {
 	public void setSnakeX(int snakeX) {
 		this.snakeXPos = snakeX;
 	}
-	
+
 	/**
 	 * Sets the snake's y-coordinate
 	 * @param snakeY
@@ -126,7 +127,7 @@ public class Snake {
 	public void setSnakeY(int snakeY) {
 		this.snakeYPos = snakeY;
 	}
-	
+
 	/**
 	 * Sets the snake's speed
 	 * @param speed
@@ -134,7 +135,7 @@ public class Snake {
 	public void setSpeed(int speed) {
 		this.snakeSpeed = speed;
 	}
-	
+
 	/**
 	 * Sets the snake's direction
 	 * @param d
@@ -142,7 +143,7 @@ public class Snake {
 	public void setDirection(Direction d) {
 		this.snakeDirection = d;
 	}
-	
+
 	/**
 	 * Returns the snake's direction
 	 * @return snakeDirection
@@ -150,7 +151,7 @@ public class Snake {
 	public Direction getDirection() {
 		return this.snakeDirection;
 	}
-	
+
 	/**
 	 * Pauses/Unpauses the snake
 	 */
