@@ -19,7 +19,7 @@ import utility.Constants.Direction;
 import controllers.GameController;
 import fruit.FruitGenerator;
 
-public class Start extends JFrame implements Runnable, KeyListener, ActionListener{
+public class Start extends JFrame implements Runnable, ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private Snake snake;
@@ -48,8 +48,6 @@ public class Start extends JFrame implements Runnable, KeyListener, ActionListen
 		frame = this;
 		
 		frame.setFocusable(true);
-
-		//frame.addKeyListener(this);
 
 		snake = Snake.getUniqueInstance();
 		fruitGenerator = FruitGenerator.getUniqueInstance();
@@ -130,34 +128,7 @@ public class Start extends JFrame implements Runnable, KeyListener, ActionListen
 
 		Toolkit.getDefaultToolkit().sync();
 	}
-
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-
-		if (key == KeyEvent.VK_UP && (snake.getDirection() != Direction.SOUTH || snake.getDirection() == null)) {
-			snake.setDirection(Direction.NORTH);
-		} else if (key == KeyEvent.VK_DOWN && (snake.getDirection() != Direction.NORTH || snake.getDirection() == null)) {
-			snake.setDirection(Direction.SOUTH);
-		} else if (key == KeyEvent.VK_RIGHT && (snake.getDirection() != Direction.WEST || snake.getDirection() == null)) {
-			snake.setDirection(Direction.EAST);
-		} else if (key == KeyEvent.VK_LEFT && (snake.getDirection() != Direction.EAST || snake.getDirection() == null)) {
-			snake.setDirection(Direction.WEST);
-		}
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		run();

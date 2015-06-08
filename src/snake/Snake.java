@@ -6,7 +6,6 @@ import java.util.Iterator;
 
 import utility.Constants;
 import utility.Constants.Direction;
-import utility.GameActions;
 /**
  * The snake. 
  * Uses singleton principle
@@ -162,5 +161,13 @@ public class Snake {
 			this.snakeSpeed = Constants.MOVE_SPEED;
 		}
 		this.isPaused = !this.isPaused;
+	}
+
+	public ArrayList<Rectangle> getBody() {
+		return body;
+	}
+
+	public void setBody(ArrayList<Rectangle> body) {
+		this.body = body;
 	}
 }

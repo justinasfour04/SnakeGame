@@ -1,5 +1,7 @@
 package controllers;
 
+import java.awt.Rectangle;
+
 import snake.Snake;
 import utility.Constants;
 import utility.Constants.Direction;
@@ -20,6 +22,7 @@ public class GameController{
 
 	private FruitGenerator fruitGenerator;
 	private Snake snake;
+	private SnakeView snakeView;
 	private static GameController gameController = null;	
 	private boolean isStarted;
 	private int score; 
@@ -105,9 +108,10 @@ public class GameController{
 			if (snakeView.getSnakeView().intersects(fruitView.getFruitDisplay())){ //check to see if the snake display rectangle intersects the fruits'
 				if(!fruitView.getFruit().isEaten()){
 					fruitView.getFruit().setEaten(true);
-					this.score+= fruitView.getFruit().getValue();
+					this.score += fruitView.getFruit().getValue();
 					fruitGenerator.removeFruit(fruitView.getFruit());//remove the fruit from the list of fruits in game, as well as the display
 					fruitGroupView.getFruitViews().remove(fruitView);
+					snake.getBody().add(new Rectangle(snake.getSnakeX() + Constants.SNAKE_SIZE, snake.getSnakeY() + Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE));	
 				}
 			}
 		}
