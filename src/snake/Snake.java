@@ -1,8 +1,12 @@
 package snake;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Queue;
 
 import utility.Constants;
 import utility.Constants.Direction;
@@ -17,8 +21,10 @@ public class Snake {
 	private int snakeXPos;
 	private int snakeYPos;
 	private int snakeSpeed;
-	private boolean isPaused;
-	private ArrayList<Rectangle> body;
+	private int bodyCount;
+	private boolean isPaused, bigger;
+	private ArrayList<Body> body;
+	private Queue<Point> bodyPosition;
 	private Direction snakeDirection;
 	private static Snake snake = null;
 
@@ -30,9 +36,12 @@ public class Snake {
 		snakeYPos = Constants.SNAKE_STARTING_POSY;
 		snakeDirection = null;
 		snakeSpeed = Constants.MOVE_SPEED;
-		body = new ArrayList<Rectangle>();
-		body.add(new Rectangle(snakeXPos, snakeYPos, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE));
+		body = new ArrayList<Body>();
+		body.add(new Body(snakeXPos, snakeYPos, 1));
+		bodyPosition = new LinkedList<Point>();
+		bodyCount = body.size();
 		this.isPaused = false;
+		this.bigger = false;
 	}
 
 	/**
@@ -59,9 +68,15 @@ public class Snake {
 		else if (snakeDirection == Direction.WEST)
 			move(Direction.WEST);
 
-		Iterator<Rectangle> bodyIterator = body.iterator();
-		while (bodyIterator.hasNext())
-			bodyIterator.next().setLocation(snakeXPos, snakeYPos);
+		//TODO: Refine the counter 
+		for (Body i : body) {
+			int bodyNumber = i.getBodyPartNumber();
+			bodyNumber--;
+			i.setBodyPartNumber(bodyNumber);
+			if (i.getBodyPartNumber() == 0)
+				i.setBodyPosition(snakeXPos, snakeYPos, body.size());
+		}
+		
 	}
 
 	/**
@@ -71,7 +86,7 @@ public class Snake {
 	public void move(Direction direction) {
 		switch (direction) {
 		case NORTH:
-			snakeYPos -= snakeSpeed;		
+			snakeYPos -= snakeSpeed;
 			break;
 		case SOUTH:
 			snakeYPos += snakeSpeed;
@@ -163,11 +178,27 @@ public class Snake {
 		this.isPaused = !this.isPaused;
 	}
 
-	public ArrayList<Rectangle> getBody() {
+	public ArrayList<Body> getBody() {
 		return body;
 	}
 
-	public void setBody(ArrayList<Rectangle> body) {
+	public void setBody(ArrayList<Body> body) {
 		this.body = body;
+	}
+
+	public Queue<Point> getBodyPosition() {
+		return bodyPosition;
+	}
+
+	public void setBodyPosition(Queue<Point> bodyPosition) {
+		this.bodyPosition = bodyPosition;
+	}
+
+	public boolean isBigger() {
+		return bigger;
+	}
+
+	public void setBigger(boolean bigger) {
+		this.bigger = bigger;
 	}
 }

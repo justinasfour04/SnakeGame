@@ -1,7 +1,10 @@
 package controllers;
 
 import java.awt.Rectangle;
+import java.util.Observable;
+import java.util.Observer;
 
+import snake.Body;
 import snake.Snake;
 import utility.Constants;
 import utility.Constants.Direction;
@@ -102,7 +105,6 @@ public class GameController{
 	 * @param fruitGroupView
 	 */
 	private void checkFruitCollision(SnakeView snakeView, FruitGroupView fruitGroupView) {
-		
 		for(int i = 0; i < fruitGroupView.getFruitViews().size(); i++){ 
 			FruitView fruitView = fruitGroupView.getFruitViews().get(i); //get the fruit display rectangle of each existing fruit
 			if (snakeView.getSnakeView().intersects(fruitView.getFruitDisplay())){ //check to see if the snake display rectangle intersects the fruits'
@@ -111,7 +113,7 @@ public class GameController{
 					this.score += fruitView.getFruit().getValue();
 					fruitGenerator.removeFruit(fruitView.getFruit());//remove the fruit from the list of fruits in game, as well as the display
 					fruitGroupView.getFruitViews().remove(fruitView);
-					snake.getBody().add(new Rectangle(snake.getSnakeX() + Constants.SNAKE_SIZE, snake.getSnakeY() + Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, Constants.SNAKE_SIZE));	
+					snake.getBody().add(new Body(snake.getSnakeX(), snake.getSnakeY(), snake.getBody().size()));
 				}
 			}
 		}
