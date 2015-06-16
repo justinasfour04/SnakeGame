@@ -24,8 +24,10 @@ public class SnakeView {
 
 	private Snake snake;
 	private Rectangle snakeView;
-	private BufferedImage snakeHead_up, snakeHead_down, snakeHead_right, snakeHead_left;
-
+	private BufferedImage snakeHeadSheet;
+	private BufferedImage snakeHeadImg;
+	private BufferedImage snakeBodySheet;
+	private BufferedImage snakeBodyImg;
 	/**
 	 * Creates a new snake display
 	 * 
@@ -33,15 +35,7 @@ public class SnakeView {
 	 */
 	public SnakeView(Snake snake) {
 		this.snake = snake;
-		try {
-			snakeHead_up = ImageIO.read(new File("C:/Users/Justin/Documents/GitHub/SnakeGame/src/window/head_up.png"));
-			snakeHead_down = ImageIO.read(new File("C:/Users/Justin/Documents/GitHub/SnakeGame/src/window/head_down.png"));
-			snakeHead_left = ImageIO.read(new File("C:/Users/Justin/Documents/GitHub/SnakeGame/src/window/head_left.png"));
-			snakeHead_right = ImageIO.read(new File("C:/Users/Justin/Documents/GitHub/SnakeGame/src/window/head_right.png"));
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.snakeHeadSheet = null;
 		this.snakeView = new Rectangle(snake.getSnakeX(), snake.getSnakeY(),
 				Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
 	}
@@ -55,20 +49,43 @@ public class SnakeView {
 		//		g.setColor(Constants.SNAKE_COLOR);
 		//		g.drawRect(snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
 		//		g.fillRect(snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
-		for (int i = 0; i < snake.getBody().size(); i++) {
-			g.setColor(Constants.SNAKE_COLOR);
-			g.drawRect(snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
-			g.fillRect(snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
+		
+		try {
+			snakeHeadSheet = ImageIO.read(new File(Constants.SNAKE_HEAD_SHEET));
+			snakeBodySheet = ImageIO.read(new File(Constants.SNAKE_BODY_SHEET));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		if (snake.getDirection() == Direction.NORTH)
-			g.drawImage(snakeHead_up, snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, null);
-		else if (snake.getDirection() == Direction.SOUTH)
-			g.drawImage(snakeHead_down, snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, null);
-		else if (snake.getDirection() == Direction.EAST)
-			g.drawImage(snakeHead_right, snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, null);
-		else if (snake.getDirection() == Direction.WEST)
-			g.drawImage(snakeHead_left, snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, null);
-
+		
+		if (snake.getDirection() == Direction.NORTH){
+			snakeHeadImg = snakeHeadSheet.getSubimage(150,0,150,150);
+			g.drawImage(snakeHeadImg, snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, null);
+			for (int i = 1; i < snake.getBody().size(); i++) {
+				snakeBodyImg = snakeBodySheet.getSubimage(79,0,129,79);
+			g.drawImage(snakeBodyImg, snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), Constants.SNAKE_SIZE, 25, null);
+			}
+		}else if (snake.getDirection() == Direction.SOUTH){
+			snakeHeadImg = snakeHeadSheet.getSubimage(150,150,150,150);
+			g.drawImage(snakeHeadImg, snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, null);
+			for (int i = 1; i < snake.getBody().size(); i++) {
+				snakeBodyImg = snakeBodySheet.getSubimage(79,179,129,79);
+					g.drawImage(snakeBodyImg, snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), Constants.SNAKE_SIZE, 25, null);
+			}
+		}else if (snake.getDirection() == Direction.EAST){
+			snakeHeadImg = snakeHeadSheet.getSubimage(0,150,150,150);
+			g.drawImage(snakeHeadImg, snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, null);
+			for (int i = 1; i < snake.getBody().size(); i++) {
+				snakeBodyImg = snakeBodySheet.getSubimage(0,129,79,129);
+				g.drawImage(snakeBodyImg, snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), 25, Constants.SNAKE_SIZE, null);
+			}
+		}else if (snake.getDirection() == Direction.WEST){
+			snakeHeadImg = snakeHeadSheet.getSubimage(0,0,150,150);
+			g.drawImage(snakeHeadImg, snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, null);
+			for (int i = 1; i < snake.getBody().size(); i++) {
+				snakeBodyImg = snakeBodySheet.getSubimage(0,0,79,129);
+				g.drawImage(snakeBodyImg, snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), 25, Constants.SNAKE_SIZE, null);
+			}
+		}
 	}
 
 	/**

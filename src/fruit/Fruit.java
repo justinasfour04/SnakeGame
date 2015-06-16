@@ -21,6 +21,7 @@ public abstract class Fruit {
 	protected int currentSpeed;
 	protected int fruitXPos, fruitYPos;
 	protected Color color;
+	protected String fruitImage;
 	
 	/**
 	 * Fruit Constructor
@@ -86,6 +87,10 @@ public abstract class Fruit {
 	 */
 	public Color getColor(){
 		return this.color;
+	}
+	
+	public String getImage(){
+		return this.fruitImage;
 	}
 	
 	public int getValue(){

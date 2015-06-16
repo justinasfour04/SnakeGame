@@ -25,6 +25,7 @@ public class LinearFruit extends Fruit{
 		this.defaultSpeed = Constants.LINEAR_FRUIT_SPEED;
 		this.color = Constants.LINEAR_FRUIT_COLOR;
 		this.isPaused = false;
+		this.fruitImage = Constants.LINEAR_FRUIT_IMAGE;
 		
 		Random r = new Random();
 		this.directionID = r.nextInt(4); //randomly choose a starting direction

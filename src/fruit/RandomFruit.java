@@ -26,6 +26,7 @@ public class RandomFruit extends Fruit{
 		this.defaultSpeed = Constants.RANDOM_FRUIT_SPEED;
 		this.color = Constants.RANDOM_FRUIT_COLOR;
 		this.isPaused = false;
+		this.fruitImage = Constants.LINEAR_FRUIT_IMAGE; //TODO: Create new fruit sprite
 		
 		Random r = new Random();
 		int directionID = r.nextInt(8); //randomly choose a starting direction

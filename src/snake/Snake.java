@@ -59,22 +59,46 @@ public class Snake {
 	 * Updates the snake's position
 	 */
 	public void update() {
-		if (snakeDirection == Direction.NORTH)
+		if (snakeDirection == Direction.NORTH){
 			move(Direction.NORTH);
-		else if (snakeDirection == Direction.SOUTH)
-			move(Direction.SOUTH);
-		else if (snakeDirection == Direction.EAST)
-			move(Direction.EAST);
-		else if (snakeDirection == Direction.WEST)
-			move(Direction.WEST);
-
 		//TODO: Refine the counter 
-		for (Body i : body) {
-			int bodyNumber = i.getBodyPartNumber();
-			bodyNumber--;
-			i.setBodyPartNumber(bodyNumber);
-			if (i.getBodyPartNumber() == 0)
-				i.setBodyPosition(snakeXPos, snakeYPos, body.size());
+				for (Body i : body) {
+					int bodyNumber = i.getBodyPartNumber();
+					bodyNumber--;
+					i.setBodyPartNumber(bodyNumber);
+					if (i.getBodyPartNumber() == 0)
+						i.setBodyPosition(snakeXPos, snakeYPos+38, body.size());
+				}
+		}else if (snakeDirection == Direction.SOUTH){
+			move(Direction.SOUTH);
+		//TODO: Refine the counter 
+				for (Body i : body) {
+					int bodyNumber = i.getBodyPartNumber();
+					bodyNumber--;
+					i.setBodyPartNumber(bodyNumber);
+					if (i.getBodyPartNumber() == 0)
+						i.setBodyPosition(snakeXPos, snakeYPos-24, body.size());
+				}
+		}else if (snakeDirection == Direction.EAST){
+			move(Direction.EAST);
+		//TODO: Refine the counter 
+				for (Body i : body) {
+					int bodyNumber = i.getBodyPartNumber();
+					bodyNumber--;
+					i.setBodyPartNumber(bodyNumber);
+					if (i.getBodyPartNumber() == 0)
+						i.setBodyPosition(snakeXPos-24, snakeYPos, body.size());
+				}
+		}else {
+			move(Direction.WEST);
+		//TODO: Refine the counter 
+				for (Body i : body) {
+					int bodyNumber = i.getBodyPartNumber();
+					bodyNumber--;
+					i.setBodyPartNumber(bodyNumber);
+					if (i.getBodyPartNumber() == 0)
+						i.setBodyPosition(snakeXPos+38, snakeYPos, body.size());
+				}
 		}
 		
 	}
