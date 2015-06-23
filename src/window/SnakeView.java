@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JComponent;
 
 import snake.Body;
 import snake.Snake;
@@ -20,24 +21,40 @@ import utility.Constants.Direction;
  * @author Justin
  *
  */
-public class SnakeView {
+public class SnakeView extends JComponent{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3704202002187224342L;
 	private Snake snake;
 	private Rectangle snakeView;
 	private BufferedImage snakeHead_up, snakeHead_down, snakeHead_right, snakeHead_left;
+	private static SnakeView snakeInstance = null;
+	
+	/**
+	 * Returns the snakeView
+	 * @return snakeInstance
+	 */
+	public static synchronized SnakeView getUniqueInstance(Snake snake) {
+		if (snakeInstance == null)
+			snakeInstance = new SnakeView(snake);
+
+		return snakeInstance;
+	}
 
 	/**
 	 * Creates a new snake display
 	 * 
 	 * @param snake
 	 */
-	public SnakeView(Snake snake) {
+	private SnakeView(Snake snake) {
 		this.snake = snake;
 		try {
-			snakeHead_up = ImageIO.read(new File("C:/Users/Justin/Documents/GitHub/SnakeGame/src/window/head_up.png"));
-			snakeHead_down = ImageIO.read(new File("C:/Users/Justin/Documents/GitHub/SnakeGame/src/window/head_down.png"));
-			snakeHead_left = ImageIO.read(new File("C:/Users/Justin/Documents/GitHub/SnakeGame/src/window/head_left.png"));
-			snakeHead_right = ImageIO.read(new File("C:/Users/Justin/Documents/GitHub/SnakeGame/src/window/head_right.png"));
+			snakeHead_up = ImageIO.read(new File("src/window/head_up.png"));
+			snakeHead_down = ImageIO.read(new File("src/window/head_down.png"));
+			snakeHead_left = ImageIO.read(new File("src/window/head_left.png"));
+			snakeHead_right = ImageIO.read(new File("src/window/head_right.png"));
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -55,11 +72,11 @@ public class SnakeView {
 		//		g.setColor(Constants.SNAKE_COLOR);
 		//		g.drawRect(snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
 		//		g.fillRect(snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
-		for (int i = 0; i < snake.getBody().size(); i++) {
-			g.setColor(Constants.SNAKE_COLOR);
-			g.drawRect(snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
-			g.fillRect(snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
-		}
+//		for (int i = 0; i < snake.getBody().size(); i++) {
+//			g.setColor(Constants.SNAKE_COLOR);
+//			g.drawRect(snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
+//			g.fillRect(snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
+//		}
 		if (snake.getDirection() == Direction.NORTH)
 			g.drawImage(snakeHead_up, snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, null);
 		else if (snake.getDirection() == Direction.SOUTH)

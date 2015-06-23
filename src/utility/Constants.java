@@ -26,7 +26,7 @@ public class Constants {
 	public static final Color SNAKE_COLOR = new Color(123,86,32);
 
 	//Fruit//
-	public static final int FRUIT_SIZE = 10;
+	public static final int FRUIT_SIZE = 40;
 	public static final int REGULAR_FRUIT_VALUE = 1;
 	public static final int LINEAR_FRUIT_VALUE = 3;
 	public static final int RANDOM_FRUIT_VALUE = 5;
@@ -41,7 +41,7 @@ public class Constants {
 	public static final int RANDOM_FRUIT_SPAWN_TIME = 30;
 
 	//Start//
-	public static final int REFRESH_RATE = 20;
+	public static final int REFRESH_RATE = 30;
 	public static final int WINDOW_WIDTH = 1100;
 	public static final int WINDOW_HEIGHT = 580;
 	public static final Font BUTTON_FONT = new Font("Times New Roman", Font.BOLD, 40);

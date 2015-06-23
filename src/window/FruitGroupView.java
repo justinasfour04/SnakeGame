@@ -1,8 +1,15 @@
 package window;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.JComponent;
+
+import snake.Snake;
 import fruit.Fruit;
 import fruit.FruitGenerator;
 
@@ -11,15 +18,31 @@ import fruit.FruitGenerator;
  * @author Justin
  *
  */
-public class FruitGroupView {
+public class FruitGroupView extends JComponent{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8018167239294109120L;
 	private FruitGenerator fruitGenerator;
 	private ArrayList<FruitView> fruitViews;
+	private static FruitGroupView fruitGroupInstance = null;
+	
+	/**
+	 * Returns the FruitGroupView
+	 * @return fruitGroupInstance
+	 */
+	public static synchronized FruitGroupView getUniqueInstance(FruitGenerator fruitGenerator) {
+		if (fruitGroupInstance == null)
+			fruitGroupInstance = new FruitGroupView(fruitGenerator);
+
+		return fruitGroupInstance;
+	}
 	
 	/**
 	 * Constructs a new FruitGroupView for the FruitGenerator
 	 * @param fruitGenerator
 	 */
-	public FruitGroupView(FruitGenerator fruitGenerator){
+	private FruitGroupView(FruitGenerator fruitGenerator){
 		this.fruitGenerator = fruitGenerator;
 		fruitViews = new ArrayList<FruitView>();
 	}

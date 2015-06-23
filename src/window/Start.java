@@ -26,17 +26,17 @@ public class Start extends JFrame implements Runnable, ActionListener{
 
 	private FruitGenerator fruitGenerator;
 	private GameController controller;
-	Timer timer;
+	private Timer timer;
 
 	private FruitGroupView fruitGroupView;
 	private SnakeView snakeView;
-
+	
 	private MainMenu mainMenuPanel;
 	private SettingsMenu settingsPanel;
 	private MainGame mainGamePanel;
 	private JPanel card;
 	private CardLayout cardLayout = new CardLayout();
-	Frame frame;
+	private Frame frame;
 	
 
 	public Start() {
@@ -96,13 +96,13 @@ public class Start extends JFrame implements Runnable, ActionListener{
 			}
 		});
 
-		add(card);
-		setVisible(true);
+		frame.add(card);
+		frame.setVisible(true);
 	}
 
 	public void startView() {
-		fruitGroupView = new FruitGroupView(fruitGenerator);
-		snakeView = new SnakeView(snake);
+		fruitGroupView = FruitGroupView.getUniqueInstance(fruitGenerator);
+		snakeView = SnakeView.getUniqueInstance(snake);
 	}
 
 	public void run() {			
@@ -114,23 +114,33 @@ public class Start extends JFrame implements Runnable, ActionListener{
 			fruitGroupView.update();
 			controller.applyRules(snake, fruitGenerator, snakeView, fruitGroupView);
 		}
-		frame.repaint();
 	}
-
+	
 	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
-		
-		if(controller.isStarted()){
-			fruitGroupView.draw(g);
-			snakeView.draw(g);
-		}
-
-		Toolkit.getDefaultToolkit().sync();
+	public void update(Graphics g) {
+		mainGamePanel.paint(g);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		run();
+		repaint();
+		mainGamePanel.repaint();
+	}
+
+	public FruitGroupView getFruitGroupView() {
+		return fruitGroupView;
+	}
+
+	public void setFruitGroupView(FruitGroupView fruitGroupView) {
+		this.fruitGroupView = fruitGroupView;
+	}
+
+	public SnakeView getSnakeView() {
+		return snakeView;
+	}
+
+	public void setSnakeView(SnakeView snakeView) {
+		this.snakeView = snakeView;
 	}
 }

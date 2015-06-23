@@ -3,6 +3,8 @@ package window;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import controllers.GameController;
+import fruit.FruitGenerator;
+import snake.Snake;
 import utility.Constants;
 import utility.Constants.Direction;
 import utility.GameActions;
@@ -33,6 +37,12 @@ public class MainGame extends JPanel{
 	private static final int HORIZONTAL_GAP = 30;
 	private static final int VERTICAL_GAP = 120;
 	private GameController controller;
+	
+	private FruitGroupView fruitGroupView;
+	private SnakeView snakeView;
+	private Snake snake;
+	private FruitGenerator fruitGenerator;
+	
 	private GameActions gameActions;
 	private static MainGame mainGame = null;
 
@@ -41,6 +51,10 @@ public class MainGame extends JPanel{
 	private MainGame() {
 		controller = GameController.getUniqueInstance();
 		gameActions = new GameActions();
+		snake = Snake.getUniqueInstance();
+		fruitGenerator = FruitGenerator.getUniqueInstance();
+		fruitGroupView = FruitGroupView.getUniqueInstance(fruitGenerator);
+		snakeView = SnakeView.getUniqueInstance(snake);
 		buildGame();
 	}
 
@@ -57,6 +71,7 @@ public class MainGame extends JPanel{
 		pauseButton = new JButton("Pause");
 		setLayout(new BorderLayout());
 		setBackground(null);
+		setDoubleBuffered(true);
 
 		gamePanel.setBackground(Color.WHITE);
 		sidePanel.setBackground(Color.BLACK);
@@ -93,6 +108,18 @@ public class MainGame extends JPanel{
 		scoreBoard.setText("Score: " + controller.getScore());
 	}
 	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		
+		if(controller.isStarted()){
+			fruitGroupView.draw(g);
+			snakeView.draw(g);
+		}
+
+		Toolkit.getDefaultToolkit().sync();
+	}
+	
 	public void addAction(String name, AbstractAction action)
 	{
 		KeyStroke pressedKeyStroke = KeyStroke.getKeyStroke(name);
@@ -101,4 +128,5 @@ public class MainGame extends JPanel{
 		inputMap.put(pressedKeyStroke, name);
 		actionMap.put(name, action);
 	}
+
 }
