@@ -24,6 +24,8 @@ public class Constants {
 	public static final int SNAKE_STARTING_POSX = 395;
 	public static final int SNAKE_STARTING_POSY = 295;
 	public static final Color SNAKE_COLOR = new Color(123,86,32);
+	public static final String SNAKE_HEAD_SHEET = "source/image/snakeHeadSheet.png"; 
+	public static final String SNAKE_BODY_SHEET = "source/image/snakeBodySheet.png";
 
 	//Fruit//
 	public static final int FRUIT_SIZE = 40;
@@ -39,6 +41,8 @@ public class Constants {
 	public static final int MAX_FRUITS = 4;
 	public static final int LINEAR_FRUIT_SPAWN_TIME = 15;
 	public static final int RANDOM_FRUIT_SPAWN_TIME = 30;
+	public static final String REGULAR_FRUIT_IMAGE = "source/image/Radish.png";
+	public static final String LINEAR_FRUIT_IMAGE = "source/image/Grape.png";
 
 	//Start//
 	public static final int REFRESH_RATE = 30;

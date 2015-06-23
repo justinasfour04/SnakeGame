@@ -111,9 +111,12 @@ public class GameController{
 				if(!fruitView.getFruit().isEaten()){
 					fruitView.getFruit().setEaten(true);
 					this.score += fruitView.getFruit().getValue();
+					for(int j=0; j<fruitView.getFruit().getValue()+3; j++){
+						snake.getBody().add(new Body(snake.getSnakeX(), snake.getSnakeY(), snake.getBody().size()));
+					}
 					fruitGenerator.removeFruit(fruitView.getFruit());//remove the fruit from the list of fruits in game, as well as the display
 					fruitGroupView.getFruitViews().remove(fruitView);
-					snake.getBody().add(new Body(snake.getSnakeX(), snake.getSnakeY(), snake.getBody().size()));
+					
 				}
 			}
 		}

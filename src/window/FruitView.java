@@ -22,8 +22,7 @@ public class FruitView {
 
 	private Rectangle fruitDisplay;
 	private Fruit fruit;
-	private BufferedImage grape, radish;
-
+	private BufferedImage fruitImage;
 	/**
 	 * Constructs a new fruitView
 	 * @param fruit
@@ -31,13 +30,7 @@ public class FruitView {
 	public FruitView(Fruit fruit) {
 		this.fruit = fruit;
 		this.fruitDisplay = new Rectangle(fruit.getFruitX(),fruit.getFruitY(), 
-				Constants.FRUIT_SIZE, Constants.FRUIT_SIZE);
-		try {
-			grape = ImageIO.read(new File("src/window/Grape.png"));
-			radish = ImageIO.read(new File("src/window/Radish.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+											23, 40); //TODO: make fruitXsize and ysize constants
 	}
 
 	/**
@@ -45,23 +38,20 @@ public class FruitView {
 	 * @param g
 	 */
 	public void draw(Graphics g){
+		try {
+			fruitImage = ImageIO.read(new File(fruit.getImage()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if(!fruit.isEaten()){
-			if (fruit instanceof LinearFruit)
-				g.drawImage(radish, fruitDisplay.x, fruitDisplay.y, fruitDisplay.width, fruitDisplay.height, null);
-			else if (fruit instanceof RegularFruit)
-				g.drawImage(grape, fruitDisplay.x, fruitDisplay.y, fruitDisplay.width, fruitDisplay.height, null);
-			else {
-				g.setColor(fruit.getColor());
-				//g.fillRect(fruit.getFruitX(), fruit.getFruitY(), fruitDisplay.width, fruitDisplay.height);
-				g.fillRect(fruitDisplay.x, fruitDisplay.y, fruitDisplay.width, fruitDisplay.height);
-			}
+			g.drawImage(fruitImage, fruit.getFruitX(), fruit.getFruitY(), 23, 40, null);
 		}
 
 	}
 
 	public void update(){
 		this.fruitDisplay = new Rectangle(fruit.getFruitX(),fruit.getFruitY(), 
-				Constants.FRUIT_SIZE, Constants.FRUIT_SIZE);
+				23, 40);
 	}
 
 	/**

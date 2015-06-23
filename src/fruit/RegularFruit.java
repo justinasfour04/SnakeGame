@@ -15,6 +15,7 @@ public class RegularFruit extends Fruit {
 		this.color = Constants.REGULAR_FRUIT_COLOR;
 		this.currentSpeed = 0;
 		this.defaultSpeed = 0;
+		this.fruitImage = Constants.REGULAR_FRUIT_IMAGE;
 	}
 
 	@Override
