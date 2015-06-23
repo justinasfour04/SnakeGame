@@ -43,6 +43,7 @@ public class MainMenu extends JPanel{
 		setLayout(new BorderLayout());
 		setEnabled(true);
 		setBackground(Color.WHITE);
+		setDoubleBuffered(true);
 		startButton = new JButton("Start");
 		settingsButton = new JButton("Settings");
 		quitButton = new JButton("Quit");

@@ -54,7 +54,7 @@ public class MainGame extends JPanel{
 		snake = Snake.getUniqueInstance();
 		fruitGenerator = FruitGenerator.getUniqueInstance();
 		fruitGroupView = FruitGroupView.getUniqueInstance(fruitGenerator);
-		snakeView = SnakeView.getUniqueInstance(snake);
+		snakeView = new SnakeView(snake);
 		buildGame();
 	}
 

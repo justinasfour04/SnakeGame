@@ -61,46 +61,46 @@ public class Snake {
 	public void update() {
 		if (snakeDirection == Direction.NORTH){
 			move(Direction.NORTH);
-		//TODO: Refine the counter 
-				for (Body i : body) {
-					int bodyNumber = i.getBodyPartNumber();
-					bodyNumber--;
-					i.setBodyPartNumber(bodyNumber);
-					if (i.getBodyPartNumber() == 0)
-						i.setBodyPosition(snakeXPos, snakeYPos+38, body.size());
-				}
-		}else if (snakeDirection == Direction.SOUTH){
+			//TODO: Refine the counter 
+			for (Body i : body) {
+				int bodyNumber = i.getBodyPartNumber();
+				bodyNumber--;
+				i.setBodyPartNumber(bodyNumber);
+				if (i.getBodyPartNumber() == 0)
+					i.setBodyPosition(snakeXPos, snakeYPos+38, body.size());
+			}
+		} else if (snakeDirection == Direction.SOUTH){
 			move(Direction.SOUTH);
-		//TODO: Refine the counter 
-				for (Body i : body) {
-					int bodyNumber = i.getBodyPartNumber();
-					bodyNumber--;
-					i.setBodyPartNumber(bodyNumber);
-					if (i.getBodyPartNumber() == 0)
-						i.setBodyPosition(snakeXPos, snakeYPos-24, body.size());
-				}
-		}else if (snakeDirection == Direction.EAST){
+			//TODO: Refine the counter 
+			for (Body i : body) {
+				int bodyNumber = i.getBodyPartNumber();
+				bodyNumber--;
+				i.setBodyPartNumber(bodyNumber);
+				if (i.getBodyPartNumber() == 0)
+					i.setBodyPosition(snakeXPos, snakeYPos-24, body.size());
+			}
+		} else if (snakeDirection == Direction.EAST){
 			move(Direction.EAST);
-		//TODO: Refine the counter 
-				for (Body i : body) {
-					int bodyNumber = i.getBodyPartNumber();
-					bodyNumber--;
-					i.setBodyPartNumber(bodyNumber);
-					if (i.getBodyPartNumber() == 0)
-						i.setBodyPosition(snakeXPos-24, snakeYPos, body.size());
-				}
-		}else {
+			//TODO: Refine the counter 
+			for (Body i : body) {
+				int bodyNumber = i.getBodyPartNumber();
+				bodyNumber--;
+				i.setBodyPartNumber(bodyNumber);
+				if (i.getBodyPartNumber() == 0)
+					i.setBodyPosition(snakeXPos-24, snakeYPos, body.size());
+			}
+		} else if (snakeDirection == Direction.WEST){
 			move(Direction.WEST);
-		//TODO: Refine the counter 
-				for (Body i : body) {
-					int bodyNumber = i.getBodyPartNumber();
-					bodyNumber--;
-					i.setBodyPartNumber(bodyNumber);
-					if (i.getBodyPartNumber() == 0)
-						i.setBodyPosition(snakeXPos+38, snakeYPos, body.size());
-				}
+			//TODO: Refine the counter 
+			for (Body i : body) {
+				int bodyNumber = i.getBodyPartNumber();
+				bodyNumber--;
+				i.setBodyPartNumber(bodyNumber);
+				if (i.getBodyPartNumber() == 0)
+					i.setBodyPosition(snakeXPos+38, snakeYPos, body.size());
+			}
 		}
-		
+
 	}
 
 	/**
@@ -124,6 +124,18 @@ public class Snake {
 		default:
 			break;
 		}
+	}
+
+	/**
+	 * Pauses/Unpauses the snake
+	 */
+	public void pause(){
+		if(!isPaused){
+			this.snakeSpeed = Constants.PAUSE;
+		} else{
+			this.snakeSpeed = Constants.MOVE_SPEED;
+		}
+		this.isPaused = !this.isPaused;
 	}
 
 	/**
@@ -188,18 +200,6 @@ public class Snake {
 	 */
 	public Direction getDirection() {
 		return this.snakeDirection;
-	}
-
-	/**
-	 * Pauses/Unpauses the snake
-	 */
-	public void pause(){
-		if(!isPaused){
-			this.snakeSpeed = Constants.PAUSE;
-		} else{
-			this.snakeSpeed = Constants.MOVE_SPEED;
-		}
-		this.isPaused = !this.isPaused;
 	}
 
 	public ArrayList<Body> getBody() {

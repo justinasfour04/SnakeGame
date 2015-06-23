@@ -18,6 +18,7 @@ public class SettingsMenu extends JPanel{
 	}
 
 	private void buildSettingsMenu() {
+		setDoubleBuffered(true);
 		backButton = new JButton("Back");
 		add(backButton);
 		

@@ -102,7 +102,7 @@ public class Start extends JFrame implements Runnable, ActionListener{
 
 	public void startView() {
 		fruitGroupView = FruitGroupView.getUniqueInstance(fruitGenerator);
-		snakeView = SnakeView.getUniqueInstance(snake);
+		snakeView = new SnakeView(snake);
 	}
 
 	public void run() {			
@@ -117,14 +117,8 @@ public class Start extends JFrame implements Runnable, ActionListener{
 	}
 	
 	@Override
-	public void update(Graphics g) {
-		mainGamePanel.paint(g);
-	}
-	
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		run();
-		repaint();
 		mainGamePanel.repaint();
 	}
 

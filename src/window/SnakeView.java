@@ -38,7 +38,7 @@ public class SnakeView extends JComponent{
 	 * 
 	 * @param snake
 	 */
-	private SnakeView(Snake snake) {
+	public SnakeView(Snake snake) {
 		this.snake = snake;
 		this.snakeHeadSheet = null;
 		this.snakeView = new Rectangle(snake.getSnakeX(), snake.getSnakeY(),
@@ -51,10 +51,6 @@ public class SnakeView extends JComponent{
 	 * @param g
 	 */
 	public void draw(Graphics g) {
-		//		g.setColor(Constants.SNAKE_COLOR);
-		//		g.drawRect(snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
-		//		g.fillRect(snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE);
-
 		try {
 			snakeHeadSheet = ImageIO.read(new File(Constants.SNAKE_HEAD_SHEET));
 			snakeBodySheet = ImageIO.read(new File(Constants.SNAKE_BODY_SHEET));
@@ -90,6 +86,9 @@ public class SnakeView extends JComponent{
 				snakeBodyImg = snakeBodySheet.getSubimage(0,0,79,129);
 				g.drawImage(snakeBodyImg, snake.getBody().get(i).getSnakeBodyPosX(), snake.getBody().get(i).getSnakeBodyPosY(), 25, Constants.SNAKE_SIZE, null);
 			}
+		} else {
+			snakeHeadImg = snakeHeadSheet.getSubimage(0,150,150,150);
+			g.drawImage(snakeHeadImg, snake.getSnakeX(), snake.getSnakeY(), Constants.SNAKE_SIZE, Constants.SNAKE_SIZE, null);
 		}
 	}
 
