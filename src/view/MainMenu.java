@@ -1,4 +1,4 @@
-package window;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,7 +12,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.text.JTextComponent;
 
-import utility.Constants;
+import util.Constants;
 
 public class MainMenu extends JPanel{
 	

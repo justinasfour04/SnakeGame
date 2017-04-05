@@ -1,35 +1,31 @@
-package window;
+package controller;
 
 import java.awt.CardLayout;
 import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import snake.Snake;
-import utility.Constants;
-import utility.Constants.Direction;
-import controllers.GameController;
-import fruit.FruitGenerator;
+import model.FruitFactory;
+import model.Snake;
+import util.Constants;
+import view.MainGame;
+import view.MainMenu;
+import view.SettingsMenu;
 
-public class Start extends JFrame implements Runnable, ActionListener{
+public class Start extends JFrame implements Runnable, ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private Snake snake;
+	private FruitFactory fruitFactory;
 
-	private FruitGenerator fruitGenerator;
 	private GameController controller;
 	private Timer timer;
-
-	private FruitGroupView fruitGroupView;
-	private SnakeView snakeView;
 	
 	private MainMenu mainMenuPanel;
 	private SettingsMenu settingsPanel;
@@ -40,21 +36,19 @@ public class Start extends JFrame implements Runnable, ActionListener{
 	
 
 	public Start() {
+		super();
 		init();
 	}
 
 	public void init() {
-
 		frame = this;
 		
 		frame.setFocusable(true);
 
 		snake = Snake.getUniqueInstance();
-		fruitGenerator = FruitGenerator.getUniqueInstance();
-
+		fruitFactory = FruitFactory.getUniqueInstance();
 		controller = GameController.getUniqueInstance();
 		buildGame();
-		startView();
 		
 		timer = new Timer(Constants.REFRESH_RATE, this);
 		timer.start();
@@ -65,7 +59,12 @@ public class Start extends JFrame implements Runnable, ActionListener{
 		frame.setResizable(false);
 		frame.setSize(Constants.WINDOW_WIDTH,Constants.WINDOW_HEIGHT);
 		frame.setLocationRelativeTo(null);
-
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
 
 		card = new JPanel(cardLayout);
 		mainMenuPanel = MainMenu.getUniqueInstance();
@@ -89,7 +88,6 @@ public class Start extends JFrame implements Runnable, ActionListener{
 			}
 		});
 		settingsPanel.getBackButton().addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(card, "1");
@@ -100,19 +98,17 @@ public class Start extends JFrame implements Runnable, ActionListener{
 		frame.setVisible(true);
 	}
 
-	public void startView() {
-		fruitGroupView = FruitGroupView.getUniqueInstance(fruitGenerator);
-		snakeView = new SnakeView(snake);
-	}
-
-	public void run() {			
-		mainGamePanel.update();
-		fruitGenerator.update();
-		snake.update();
-		if(controller.isStarted()){
-			snakeView.update();
-			fruitGroupView.update();
-			controller.applyRules(snake, fruitGenerator, snakeView, fruitGroupView);
+	public void run() {
+		if (!controller.isGameOver()) {
+			mainGamePanel.update();
+			snake.update();
+			fruitFactory.update();
+			controller.fruitEaten();
+			controller.isWallHit();
+		} else {
+			controller.setGameOver(false);
+			mainGamePanel.reset();
+			init();
 		}
 	}
 	
@@ -120,21 +116,5 @@ public class Start extends JFrame implements Runnable, ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		run();
 		mainGamePanel.repaint();
-	}
-
-	public FruitGroupView getFruitGroupView() {
-		return fruitGroupView;
-	}
-
-	public void setFruitGroupView(FruitGroupView fruitGroupView) {
-		this.fruitGroupView = fruitGroupView;
-	}
-
-	public SnakeView getSnakeView() {
-		return snakeView;
-	}
-
-	public void setSnakeView(SnakeView snakeView) {
-		this.snakeView = snakeView;
 	}
 }

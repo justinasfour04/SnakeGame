@@ -1,7 +1,8 @@
-package fruit;
+package model;
 
-import utility.Constants;
-import utility.Constants.Direction;
+import util.Constants;
+import util.Constants.Direction;
+
 /**
  * A regular non-moving Fruit
  * @author Justin
@@ -36,6 +37,5 @@ public class RegularFruit extends Fruit {
 	@Override
 	public Direction getDirection() {
 		return Direction.NONE;
-	}	
-	
+	}
 }

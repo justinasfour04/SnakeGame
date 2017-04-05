@@ -1,4 +1,4 @@
-package utility;
+package util;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,7 +18,7 @@ public class Constants {
 	public static final int MIN_BOUNDARY_Y = 40;
 	public static final int MAX_BOUNDARY_X = 790;
 	public static final int MAX_BOUNDARY_Y = 560;
-	public static final int MOVE_SPEED = 3;
+	public static final int MOVE_SPEED = 10;
 	public static final int START_SPEED = 0;
 	public static final int SNAKE_SIZE = 40;
 	public static final int SNAKE_STARTING_POSX = 395;
@@ -26,9 +26,10 @@ public class Constants {
 	public static final Color SNAKE_COLOR = new Color(123,86,32);
 	public static final String SNAKE_HEAD_SHEET = "source/image/snakeHeadSheet.png"; 
 	public static final String SNAKE_BODY_SHEET = "source/image/snakeBodySheet.png";
+	public static final int BODY_SIZE = 10;
 
 	//Fruit//
-	public static final int FRUIT_SIZE = 40;
+	public static final int FRUIT_SIZE = 15;
 	public static final int REGULAR_FRUIT_VALUE = 1;
 	public static final int LINEAR_FRUIT_VALUE = 3;
 	public static final int RANDOM_FRUIT_VALUE = 5;
@@ -45,7 +46,7 @@ public class Constants {
 	public static final String LINEAR_FRUIT_IMAGE = "source/image/Grape.png";
 
 	//Start//
-	public static final int REFRESH_RATE = 30;
+	public static final int REFRESH_RATE = 60;
 	public static final int WINDOW_WIDTH = 1100;
 	public static final int WINDOW_HEIGHT = 580;
 	public static final Font BUTTON_FONT = new Font("Times New Roman", Font.BOLD, 40);
@@ -58,6 +59,9 @@ public class Constants {
 	
 	//MISC//
 	public static final int PAUSE = 0;
+	
+	public static final int GAME_PANEL_WIDTH = 790;
+	public static final int GAME_PANEL_HEIGHT = 480;
 	
 	//Directions//
 	public enum Direction {

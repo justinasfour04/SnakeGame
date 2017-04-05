@@ -1,4 +1,4 @@
-package window;
+package view;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
